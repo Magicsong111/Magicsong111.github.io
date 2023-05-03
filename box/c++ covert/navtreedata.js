@@ -35,7 +35,7 @@ var NAVTREE =
       ] ]
     ]
    ],
-   ["下载","./out/output.exe",[["打包的可执行程序","./out/output.exe",null],["源代码","./out/src.zip",null],["github仓库","any",null]]]
+   ["下载","./out/output.exe",[["打包的可执行程序","./out/output.exe",null],["源代码","./out/src.zip",null],["github仓库","https://github.com/Magicsong111/C-Covert",null]]]
   ] ]
 ];
 
