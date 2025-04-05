@@ -1,22 +1,128 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="author" content="神奇的小宋">
-		<meta name="keywords" content="神奇的小宋">
-		<meta name="description" content="这是一个B站UP主做的网站，拥有在线工具箱和下载中心">
-		<title>主页</title>
-		<link rel="shortcut icon" href="./favicon.ico">
-	</head>
-	<body style="background-color:#2B98DD">
-		<div align="center">
-			<h1 align="center"><font color="white">welcome back</font></h1>
-			<img border="0" src="./BG.jpg" alt="some thing were wrong……" width="750" height="250">
-			<br>
-			<a href="./download/index.html"><font size="5" color="white">下载</font></a>
-			<a href="./box/index.html"><font size="5" color="white">项目</font></a>
-			<a href="./about/index.html"><font size="5" color="white">关于</font></a>
-		</div>	
-	</body>
-</html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人网站</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #01a285; /* 设置背景色为绿色 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .container {
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card-subtitle {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .card-author {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .card-description {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .card a {
+            color: #333;
+            text-decoration: none; /* 这行代码已经移除了下划线 */
+            font-size: 16px;
+            margin: 0 5px;
+        }
+
+        .breadcrumb {
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+        }
+
+        .breadcrumb a {
+            color: #333;
+            text-decoration: none; /* 这行代码已经移除了下划线 */
+            font-size: 16px;
+            margin: 0 5px;
+        }
+
+        .breadcrumb span {
+            color: #666;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 面包屑导航 -->
+    <div class="breadcrumb">
+        <a href="download/index.html">旧版下载站</a>
+        <span>/</span>
+        <a href="https://space.bilibili.com/1282445361">关注UP</a>
+    </div>
+
+    <!-- 工具卡片容器 -->
+    <div class="container">
+        <!-- 工具卡片 1 -->
+        <div class="card">
+            <a href="works/golden.html">
+                <div class="card-content">
+                    <h2 class="card-title">黄金矿工</h2>
+                    <p class="card-subtitle">2024/11/25</p>
+                    <p class="card-description">使用C++ SFML实现</p>
+                </div>
+            </a>
+        </div>
+        <!-- 工具卡片 2 -->
+        <div class="card">
+            <a href="works/aircraft.html">
+                <div class="card-content">
+                    <h2 class="card-title">飞机大战</h2>
+                    <p class="card-subtitle">2025/04/05</p>
+                    <p class="card-description">使用Python pygame实现</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
