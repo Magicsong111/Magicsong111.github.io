@@ -30,11 +30,24 @@
             justify-content: center;
             align-items: center;
             border-right: 1px solid #ccc;
+            position: relative; /* 添加相对定位 */
         }
 
         .image-placeholder {
             font-size: 48px;
             font-weight: bold;
+            width: 100%; /* 占据左侧区域的整个宽度 */
+            height: 100%; /* 占据左侧区域的整个高度 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* 防止图片超出容器 */
+        }
+
+        .image-placeholder img {
+            width: 100%; /* 图片宽度填满容器 */
+            height: 100%; /* 图片高度填满容器 */
+            object-fit: contain; /* 保持图片的宽高比 */
         }
 
         .right-side {
@@ -131,20 +144,66 @@
             font-size: 18px;
             text-align: left;
         }
+
+        .arrow {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .arrow.left {
+            left: 50%;
+            position: absolute;/*绝对定位*/
+            top: 50%;
+            left: 0px;
+            margin-top: -25px;
+        }
+
+        .arrow.right {
+            right: 50%;
+            position:absolute;/*绝对定位*/
+            top: 50%;
+            right: 0px;
+            margin-top: -25px;
+        }
     </style>
+    <script>
+        "use strict";
+        var index = 0;
+        const length = 7;
+        function change(dir)
+        {
+            index += dir;
+            if (index < 0)
+                index = length - 1;
+            if(index >= length)
+                index = 0;
+            document.getElementById("image").src = `golden/${index + 1}.jpg`;
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <!-- 左侧图片区域 -->
         <div class="left-side">
-            <div class="image-placeholder">图片</div>
+            <button class="arrow left" onclick="change(-1)">&#10094;</button>
+            <div class="image-placeholder">
+                <img id="image" src="golden/1.jpg" alt="图片">
+            </div>
+            <button class="arrow right" onclick="change(1)">&#10095;</button>
         </div>
         
         <!-- 右侧内容区域 -->
         <div class="right-side">
             <!-- 按钮区域 -->
             <div class="action-buttons">
-                <a href="https://wwwf.lanzout.com/iK1uJ2udlfli">
+                <a href="https://wwwf.lanzout.com/i3mjp2ukgkfe">
                     <button class="download">蓝奏云</button>
                 </a>
                 <button class="github">Github</button>
@@ -153,7 +212,7 @@
             
             <!-- 内容框区域 -->
             <div class="content-box">
-                <div class="content-text">密码：21ff<br/>黄金矿工高仿，快点来挖金子吧，相信你一人也可以照样过关！<br/>bug反馈请至28859701@qq.com</div>
+                <div class="content-text">密码：3n0b<br/>黄金矿工高仿，快点来挖金子吧，相信你一人也可以照样过关！<br/>bug反馈请至28859701@qq.com</div>
             </div>
         </div>
     </div>
