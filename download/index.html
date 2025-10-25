@@ -1,14 +1,75 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-	<head>
-		<title>下载小站</title>
-	</head>
-	<body style="background-color:#2B98DD">
-		<script src="./DL.js"></script>
-		<h1 align="center"><font color="white">下载</font></h1>
-		<a href="./Minecraft Gift Code Generator.exe"><font color="white">Minecraft Gift Code Generator.exe</font></a>
-        <br>
-        <a href="./Paper Minecraft v11.7 (Minecraft 2D).html"><font color="white">Paper Minecraft v11.7 (Minecraft 2D)</font></a>
-	</body>
-</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小工具</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #009479; /* 设置背景色为绿色 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* 确保身体至少占满整个视口高度 */
+        }
 
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            width: 100%;
+            max-width: 600px; /* 设置最大宽度 */
+            overflow-y: auto; /* 确保垂直溢出时出现滚动条 */
+            height: calc(100vh - 150px); /* 确保容器高度不超过视口高度 */
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px; /* 增加圆角半径 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* 增加阴影效果 */
+            overflow: hidden;
+            transition: transform 0.3s;
+            width: 400px; /* 设置卡片宽度 */
+            height: 100px; /* 设置卡片高度 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px; /* 增加卡片之间的间距 */
+        }
+
+        .card:hover {
+            transform: scale(1.1); /* 增加悬停时的放大效果 */
+        }
+
+        .card a {
+            color: #333;
+            text-decoration: none; /* 这行代码已经移除了下划线 */
+            font-size: 18px; /* 增加字体大小 */
+        }
+    </style>
+</head>
+<body>
+    <!-- <script src="./DL.js"></script> -->
+    <h1 align="center" style="color:white;">下载</h1>
+    <br>
+    <div class="card-container">
+        <div class="card">
+            <a href="./Paper Minecraft v11.7 (Minecraft 2D).html">Paper Minecraft v11.7 (Minecraft 2D)</a>
+        </div>
+        <div class="card">
+            <a href="./Minecraft Gift Code Generator.exe">Minecraft Gift Code Generator (已失效)</a>
+        </div>
+        <!-- 增加更多的卡片 -->
+        <div class="card">
+            <a href="./百度网盘在线观看-2025-10-19.user.js">百度网盘视频在线观看，无需下载，转存。<br>(油猴插件)</a>
+        </div>
+        <!-- 继续添加卡片 -->
+    </div>
+</body>
+</html>
