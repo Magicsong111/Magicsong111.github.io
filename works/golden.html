@@ -42,6 +42,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden; /* 防止图片超出容器 */
+            background-color: white; /* 切换时显示空白 */
         }
 
         .image-placeholder img {
@@ -159,7 +160,7 @@
 
         .arrow.left {
             left: 50%;
-            position: absolute;/*绝对定位*/
+            position: absolute; /* 绝对定位 */
             top: 50%;
             left: 0px;
             margin-top: -25px;
@@ -167,7 +168,7 @@
 
         .arrow.right {
             right: 50%;
-            position:absolute;/*绝对定位*/
+            position: absolute; /* 绝对定位 */
             top: 50%;
             right: 0px;
             margin-top: -25px;
@@ -177,14 +178,30 @@
         "use strict";
         var index = 0;
         const length = 7;
-        function change(dir)
-        {
+
+        function change(dir) {
             index += dir;
             if (index < 0)
                 index = length - 1;
-            if(index >= length)
+            if (index >= length)
                 index = 0;
-            document.getElementById("image").src = `golden/${index + 1}.jpg`;
+
+            const img = document.getElementById("image");
+            const newSrc = `golden/${index + 1}.jpg`;
+
+            // 先切换成空白
+            img.src = '';
+
+            // 创建新的图片对象并监听加载完成事件
+            const newImg = new Image();
+            newImg.onload = function() {
+                img.src = newSrc;
+            };
+            newImg.onerror = function() {
+                // 如果图片加载失败，可以在这里处理错误
+                console.error("Failed to load image: " + newSrc);
+            };
+            newImg.src = newSrc;
         }
     </script>
 </head>
@@ -194,7 +211,7 @@
         <div class="left-side">
             <button class="arrow left" onclick="change(-1)">&#10094;</button>
             <div class="image-placeholder">
-                <img id="image" src="golden/1.jpg" alt="图片">
+                <img id="image" src="golden/1.jpg" alt="">
             </div>
             <button class="arrow right" onclick="change(1)">&#10095;</button>
         </div>
@@ -206,7 +223,7 @@
                 <a href="https://magicsong.lanzout.com/i6L9H398s9sb">
                     <button class="download">蓝奏云</button>
                 </a>
-                <button class="github">Github</button>
+                <!-- <button class="github">Github</button> -->
                 <button class="bilibili">Bilibili</button>
             </div>
             
