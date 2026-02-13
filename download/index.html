@@ -25,22 +25,23 @@
             margin: 20px;
             width: 100%;
             max-width: 600px; /* 设置最大宽度 */
+            overflow-x: hidden;
             overflow-y: auto; /* 确保垂直溢出时出现滚动条 */
             height: calc(100vh - 150px); /* 确保容器高度不超过视口高度 */
         }
 
         .card {
             background-color: white;
-            border-radius: 10px; /* 增加圆角半径 */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* 增加阴影效果 */
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             transition: transform 0.3s;
-            width: 400px; /* 设置卡片宽度 */
-            height: 100px; /* 设置卡片高度 */
+            width: calc(100% - 70px);  /* 修改为动态宽度，左右保留10px间距 */
+            height: 100px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px; /* 增加卡片之间的间距 */
+            align-items: center;      /* 垂直居中 */
+            justify-content: center;  /* 水平居中 */
+            margin: 10px;
         }
 
         .card:hover {
@@ -51,6 +52,7 @@
             color: #333;
             text-decoration: none; /* 这行代码已经移除了下划线 */
             font-size: 18px; /* 增加字体大小 */
+            text-align: center;
         }
     </style>
 </head>
@@ -60,23 +62,23 @@
     <br>
     <div class="card-container">
         <div class="card">
-            <a href="./Paper Minecraft v11.7 (Minecraft 2D).html">Paper Minecraft v11.7 (Minecraft 2D)(汉化)(有BUG)</a>
+            <a href="./Paper Minecraft v11.7 (Minecraft 2D).html"><b>Paper Minecraft v11.7 (Minecraft 2D)</b><br>(汉化)(有BUG)</a>
         </div>
 
         <div class="card">
-            <a href="./Minecraft Gift Code Generator.exe">Minecraft Gift Code Generator (已失效)</a>
+            <a href="./Minecraft Gift Code Generator.exe"><b>Minecraft Gift Code Generator</b><br>我的世界国际版礼品码生成器 (已失效)</a>
         </div>
         
         <div class="card">
-            <a href="./百度网盘在线观看-2025-10-19.user.js">百度网盘视频在线观看，无需下载，转存。<br>(油猴插件)</a>
+            <a href="./百度网盘在线观看-2025-10-19.user.js"><b>百度网盘视频在线观看</b>(油猴插件)<br>无需下载，转存。</a>
         </div>
         
         <div class="card">
-            <a href="./m3u8Listener.html">m3u8Listener<br>将m3u8以纯音频形式播放</a>
+            <a href="./m3u8Listener.html"><b>m3u8Listener</b><br>将m3u8以纯音频形式播放</a>
         </div>
 
         <div class="card">
-            <a href="./CCTV-Listener/index.html">CCTV-Listener<br>在线听央视节目单</a>
+            <a href="./CCTV-Listener/index.html"><b>CCTV-Listener</b><br>在线听央视节目单</a>
         </div>
     </div>
 </body>
