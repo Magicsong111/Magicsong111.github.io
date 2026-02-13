@@ -203,6 +203,18 @@
             };
             newImg.src = newSrc;
         }
+        
+        function gotoLan(pwd) {
+            navigator.clipboard.writeText(pwd)
+                .then(() => {
+                    alert("密码已复制到剪切板");
+                    window.open("https://magicsong.lanzout.com/i6L9H398s9sb", "_self");
+                })
+                .catch(err => {
+                    console.error(err);
+                    window.open("https://magicsong.lanzout.com/i6L9H398s9sb");
+                })
+        }
     </script>
 </head>
 <body>
@@ -220,9 +232,7 @@
         <div class="right-side">
             <!-- 按钮区域 -->
             <div class="action-buttons">
-                <a href="https://magicsong.lanzout.com/i6L9H398s9sb">
-                    <button class="download">蓝奏云</button>
-                </a>
+                <button class="download" onclick="gotoLan('5tv4')">蓝奏云</button>
                 <!-- <button class="github">Github</button> -->
                 <button class="bilibili">Bilibili</button>
             </div>

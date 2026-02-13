@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>一线 · 央视卡片列表</title>
+    <style>
+        /* 全局重置 —— 真正贴顶，无干扰边距 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #01a285;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1e2a3a;
+            line-height: 1.5;
+        }
+
+        /* 弹性布局，强制底部按钮，卡片区域自动撑开 */
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;     /* 大屏居中，依然贴顶 */
+            background-color: #01a285;
+            box-shadow: 0 0 20px rgba(0,0,0,0.02);
+        }
+
+        /* 卡片容器——严格从顶端开始，0间距 */
+        .card-grid {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;          /* 卡片之间的间隙，但顶部无间隙 */
+            padding: 0 16px 16px 16px;  /* 顶部内边距为0，完美贴顶！ */
+            width: 100%;
+            overflow-y: auto;
+            background-color: #01a285;
+        }
+
+        /* 单个卡片 —— 圆润、干净、可点击 */
+        .card-item {
+            display: block;
+            width: 100%;
+            background-color: white;
+            border-radius: 20px;
+            padding: 18px 22px;
+            text-decoration: none;
+            color: #0b1c2e;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(2px);
+            word-break: break-word;
+            cursor: pointer;
+        }
+
+        /* 卡片悬停效果，更明显的“可点击” */
+        .card-item:hover {
+            background-color: #fefefe;
+            box-shadow: 0 12px 22px rgba(0, 20, 50, 0.08);
+            transform: translateY(-2px);
+            border-color: #d0d9e8;
+        }
+
+        .card-item:active {
+            transform: scale(0.98);
+            background-color: #f2f6ff;
+        }
+
+        /* 加载中、占位提示文本 */
+        .list-placeholder {
+            padding: 32px 20px;
+            text-align: center;
+            color: #6b7a8c;
+            font-size: 15px;
+            background: transparent;
+        }
+
+        /* 底部按钮区域 —— 干净利落 */
+        .footer-bar {
+            padding: 20px 16px 24px;
+            background: #01a285;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .next-btn {
+            background: white;
+            border: none;
+            border-radius: 40px;
+            padding: 14px 28px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #0a58ca;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 14px rgba(10, 88, 202, 0.08);
+            border: 1px solid rgba(10, 88, 202, 0.15);
+            transition: 0.2s;
+            width: 100%;
+            max-width: 300px;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .next-btn:hover {
+            background: #f0f4fe;
+            border-color: #0a58ca;
+            box-shadow: 0 10px 20px rgba(10, 88, 202, 0.12);
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 10px rgba(10,88,202,0.1);
+        }
+
+        .next-btn:disabled {
+            background: #f0f4fe6e;
+        }
+
+        /* 没有任何内容时保持容器可滚动 */
+        .card-grid:empty::before {
+            content: "📺 加载栏目速递……";
+            display: block;
+            padding: 40px 20px;
+            text-align: center;
+            color: #5e6f7e;
+            font-size: 16px;
+            background: transparent;
+        }
+
+        /* 链接卡片去掉下划线 */
+        a.card-item {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 小屏适配 */
+        @media (max-width: 480px) {
+            .card-grid {
+                padding: 0 12px 12px;
+                gap: 10px;
+            }
+            .card-item {
+                padding: 16px 18px;
+                border-radius: 18px;
+                font-size: 15px;
+            }
+            .next-btn {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- 
+            卡片容器：绝对顶端，无 margin/padding-top 
+            动态填充从callback渲染的圆角卡片 
+        -->
+        <div id="js-cardList" class="card-grid">
+            <!-- 初始状态会显示:empty伪类的“加载栏目速递……”, 无需写死内容 -->
+        </div>
+
+        <!-- 底部下一页按钮，严格贴底，功能占位 TODO -->
+        <div class="footer-bar">
+            <button id="prevPageBtn" class="next-btn" disabled>⬅️ 上一页</button>
+            <button id="nextPageBtn" class="next-btn">➡️ 下一页</button>
+        </div>
+    </div>
+
+    <script>
+        var para = new URLSearchParams(window.location.search);
+        var page = para.get('page');
+        var name = para.get('name');
+        if(page === null || name === null) throw ReferenceError();
+        // AI太强了......我只实现了爬虫和代理部分，剩下设计完全都交给AI了
+
+        // ======================================================
+        // 一线 · 卡片界面   ——   保留原始完整逻辑 + 卡片化渲染
+        // 全局callback —— 将列表渲染为圆角卡片，贴顶排列
+        // ======================================================
+
+        // 这个函数用于得到节目的媒体信息
+        // 由于爬虫太过辛苦，没有对一些错误进行处理，如果找到那就是倒大霉了
+
+        // 这一坨东西是我从官方的js中截到的，大体意思是实现了一个简单的md5
+        // 几乎没做修改，直接加进来了
+        const md5 = (function() {
+            var i = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+            function u(e, t) {
+                var n = e[0]
+                  , i = e[1]
+                  , r = e[2]
+                  , o = e[3];
+                n += (i & r | ~i & o) + t[0] - 680876936 | 0;
+                n = (n << 7 | n >>> 25) + i | 0;
+                o += (n & i | ~n & r) + t[1] - 389564586 | 0;
+                o = (o << 12 | o >>> 20) + n | 0;
+                r += (o & n | ~o & i) + t[2] + 606105819 | 0;
+                r = (r << 17 | r >>> 15) + o | 0;
+                i += (r & o | ~r & n) + t[3] - 1044525330 | 0;
+                i = (i << 22 | i >>> 10) + r | 0;
+                n += (i & r | ~i & o) + t[4] - 176418897 | 0;
+                n = (n << 7 | n >>> 25) + i | 0;
+                o += (n & i | ~n & r) + t[5] + 1200080426 | 0;
+                o = (o << 12 | o >>> 20) + n | 0;
+                r += (o & n | ~o & i) + t[6] - 1473231341 | 0;
+                r = (r << 17 | r >>> 15) + o | 0;
+                i += (r & o | ~r & n) + t[7] - 45705983 | 0;
+                i = (i << 22 | i >>> 10) + r | 0;
+                n += (i & r | ~i & o) + t[8] + 1770035416 | 0;
+                n = (n << 7 | n >>> 25) + i | 0;
+                o += (n & i | ~n & r) + t[9] - 1958414417 | 0;
+                o = (o << 12 | o >>> 20) + n | 0;
+                r += (o & n | ~o & i) + t[10] - 42063 | 0;
+                r = (r << 17 | r >>> 15) + o | 0;
+                i += (r & o | ~r & n) + t[11] - 1990404162 | 0;
+                i = (i << 22 | i >>> 10) + r | 0;
+                n += (i & r | ~i & o) + t[12] + 1804603682 | 0;
+                n = (n << 7 | n >>> 25) + i | 0;
+                o += (n & i | ~n & r) + t[13] - 40341101 | 0;
+                o = (o << 12 | o >>> 20) + n | 0;
+                r += (o & n | ~o & i) + t[14] - 1502002290 | 0;
+                r = (r << 17 | r >>> 15) + o | 0;
+                i += (r & o | ~r & n) + t[15] + 1236535329 | 0;
+                i = (i << 22 | i >>> 10) + r | 0;
+                n += (i & o | r & ~o) + t[1] - 165796510 | 0;
+                n = (n << 5 | n >>> 27) + i | 0;
+                o += (n & r | i & ~r) + t[6] - 1069501632 | 0;
+                o = (o << 9 | o >>> 23) + n | 0;
+                r += (o & i | n & ~i) + t[11] + 643717713 | 0;
+                r = (r << 14 | r >>> 18) + o | 0;
+                i += (r & n | o & ~n) + t[0] - 373897302 | 0;
+                i = (i << 20 | i >>> 12) + r | 0;
+                n += (i & o | r & ~o) + t[5] - 701558691 | 0;
+                n = (n << 5 | n >>> 27) + i | 0;
+                o += (n & r | i & ~r) + t[10] + 38016083 | 0;
+                o = (o << 9 | o >>> 23) + n | 0;
+                r += (o & i | n & ~i) + t[15] - 660478335 | 0;
+                r = (r << 14 | r >>> 18) + o | 0;
+                i += (r & n | o & ~n) + t[4] - 405537848 | 0;
+                i = (i << 20 | i >>> 12) + r | 0;
+                n += (i & o | r & ~o) + t[9] + 568446438 | 0;
+                n = (n << 5 | n >>> 27) + i | 0;
+                o += (n & r | i & ~r) + t[14] - 1019803690 | 0;
+                o = (o << 9 | o >>> 23) + n | 0;
+                r += (o & i | n & ~i) + t[3] - 187363961 | 0;
+                r = (r << 14 | r >>> 18) + o | 0;
+                i += (r & n | o & ~n) + t[8] + 1163531501 | 0;
+                i = (i << 20 | i >>> 12) + r | 0;
+                n += (i & o | r & ~o) + t[13] - 1444681467 | 0;
+                n = (n << 5 | n >>> 27) + i | 0;
+                o += (n & r | i & ~r) + t[2] - 51403784 | 0;
+                o = (o << 9 | o >>> 23) + n | 0;
+                r += (o & i | n & ~i) + t[7] + 1735328473 | 0;
+                r = (r << 14 | r >>> 18) + o | 0;
+                i += (r & n | o & ~n) + t[12] - 1926607734 | 0;
+                i = (i << 20 | i >>> 12) + r | 0;
+                n += (i ^ r ^ o) + t[5] - 378558 | 0;
+                n = (n << 4 | n >>> 28) + i | 0;
+                o += (n ^ i ^ r) + t[8] - 2022574463 | 0;
+                o = (o << 11 | o >>> 21) + n | 0;
+                r += (o ^ n ^ i) + t[11] + 1839030562 | 0;
+                r = (r << 16 | r >>> 16) + o | 0;
+                i += (r ^ o ^ n) + t[14] - 35309556 | 0;
+                i = (i << 23 | i >>> 9) + r | 0;
+                n += (i ^ r ^ o) + t[1] - 1530992060 | 0;
+                n = (n << 4 | n >>> 28) + i | 0;
+                o += (n ^ i ^ r) + t[4] + 1272893353 | 0;
+                o = (o << 11 | o >>> 21) + n | 0;
+                r += (o ^ n ^ i) + t[7] - 155497632 | 0;
+                r = (r << 16 | r >>> 16) + o | 0;
+                i += (r ^ o ^ n) + t[10] - 1094730640 | 0;
+                i = (i << 23 | i >>> 9) + r | 0;
+                n += (i ^ r ^ o) + t[13] + 681279174 | 0;
+                n = (n << 4 | n >>> 28) + i | 0;
+                o += (n ^ i ^ r) + t[0] - 358537222 | 0;
+                o = (o << 11 | o >>> 21) + n | 0;
+                r += (o ^ n ^ i) + t[3] - 722521979 | 0;
+                r = (r << 16 | r >>> 16) + o | 0;
+                i += (r ^ o ^ n) + t[6] + 76029189 | 0;
+                i = (i << 23 | i >>> 9) + r | 0;
+                n += (i ^ r ^ o) + t[9] - 640364487 | 0;
+                n = (n << 4 | n >>> 28) + i | 0;
+                o += (n ^ i ^ r) + t[12] - 421815835 | 0;
+                o = (o << 11 | o >>> 21) + n | 0;
+                r += (o ^ n ^ i) + t[15] + 530742520 | 0;
+                r = (r << 16 | r >>> 16) + o | 0;
+                i += (r ^ o ^ n) + t[2] - 995338651 | 0;
+                i = (i << 23 | i >>> 9) + r | 0;
+                n += (r ^ (i | ~o)) + t[0] - 198630844 | 0;
+                n = (n << 6 | n >>> 26) + i | 0;
+                o += (i ^ (n | ~r)) + t[7] + 1126891415 | 0;
+                o = (o << 10 | o >>> 22) + n | 0;
+                r += (n ^ (o | ~i)) + t[14] - 1416354905 | 0;
+                r = (r << 15 | r >>> 17) + o | 0;
+                i += (o ^ (r | ~n)) + t[5] - 57434055 | 0;
+                i = (i << 21 | i >>> 11) + r | 0;
+                n += (r ^ (i | ~o)) + t[12] + 1700485571 | 0;
+                n = (n << 6 | n >>> 26) + i | 0;
+                o += (i ^ (n | ~r)) + t[3] - 1894986606 | 0;
+                o = (o << 10 | o >>> 22) + n | 0;
+                r += (n ^ (o | ~i)) + t[10] - 1051523 | 0;
+                r = (r << 15 | r >>> 17) + o | 0;
+                i += (o ^ (r | ~n)) + t[1] - 2054922799 | 0;
+                i = (i << 21 | i >>> 11) + r | 0;
+                n += (r ^ (i | ~o)) + t[8] + 1873313359 | 0;
+                n = (n << 6 | n >>> 26) + i | 0;
+                o += (i ^ (n | ~r)) + t[15] - 30611744 | 0;
+                o = (o << 10 | o >>> 22) + n | 0;
+                r += (n ^ (o | ~i)) + t[6] - 1560198380 | 0;
+                r = (r << 15 | r >>> 17) + o | 0;
+                i += (o ^ (r | ~n)) + t[13] + 1309151649 | 0;
+                i = (i << 21 | i >>> 11) + r | 0;
+                n += (r ^ (i | ~o)) + t[4] - 145523070 | 0;
+                n = (n << 6 | n >>> 26) + i | 0;
+                o += (i ^ (n | ~r)) + t[11] - 1120210379 | 0;
+                o = (o << 10 | o >>> 22) + n | 0;
+                r += (n ^ (o | ~i)) + t[2] + 718787259 | 0;
+                r = (r << 15 | r >>> 17) + o | 0;
+                i += (o ^ (r | ~n)) + t[9] - 343485551 | 0;
+                i = (i << 21 | i >>> 11) + r | 0;
+                e[0] = n + e[0] | 0;
+                e[1] = i + e[1] | 0;
+                e[2] = r + e[2] | 0;
+                e[3] = o + e[3] | 0
+            }
+            function h(e) {
+                var t = [], n;
+                for (n = 0; n < 64; n += 4)
+                    t[n >> 2] = e.charCodeAt(n) + (e.charCodeAt(n + 1) << 8) + (e.charCodeAt(n + 2) << 16) + (e.charCodeAt(n + 3) << 24);
+                return t
+            }
+            function d(e) {
+                var t = [], n;
+                for (n = 0; n < 64; n += 4)
+                    t[n >> 2] = e[n] + (e[n + 1] << 8) + (e[n + 2] << 16) + (e[n + 3] << 24);
+                return t
+            }
+            function r(e) {
+                var t = e.length, n = [1732584193, -271733879, -1732584194, 271733878], i, r, o, a, s, l;
+                for (i = 64; i <= t; i += 64)
+                    u(n, h(e.substring(i - 64, i)));
+                e = e.substring(i - 64);
+                r = e.length;
+                o = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                for (i = 0; i < r; i += 1)
+                    o[i >> 2] |= e.charCodeAt(i) << (i % 4 << 3);
+                o[i >> 2] |= 128 << (i % 4 << 3);
+                if (i > 55) {
+                    u(n, o);
+                    for (i = 0; i < 16; i += 1)
+                        o[i] = 0
+                }
+                a = t * 8;
+                a = a.toString(16).match(/(.*?)(.{0,8})$/);
+                s = parseInt(a[2], 16);
+                l = parseInt(a[1], 16) || 0;
+                o[14] = s;
+                o[15] = l;
+                u(n, o);
+                return n
+            }
+            function o(e) {
+                var t = e.length, n = [1732584193, -271733879, -1732584194, 271733878], i, r, o, a, s, l;
+                for (i = 64; i <= t; i += 64)
+                    u(n, d(e.subarray(i - 64, i)));
+                e = i - 64 < t ? e.subarray(i - 64) : new Uint8Array(0);
+                r = e.length;
+                o = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                for (i = 0; i < r; i += 1)
+                    o[i >> 2] |= e[i] << (i % 4 << 3);
+                o[i >> 2] |= 128 << (i % 4 << 3);
+                if (i > 55) {
+                    u(n, o);
+                    for (i = 0; i < 16; i += 1)
+                        o[i] = 0
+                }
+                a = t * 8;
+                a = a.toString(16).match(/(.*?)(.{0,8})$/);
+                s = parseInt(a[2], 16);
+                l = parseInt(a[1], 16) || 0;
+                o[14] = s;
+                o[15] = l;
+                u(n, o);
+                return n
+            }
+            function n(e) {
+                var t = "", n;
+                for (n = 0; n < 4; n += 1)
+                    t += i[e >> n * 8 + 4 & 15] + i[e >> n * 8 & 15];
+                return t
+            }
+            function a(e) {
+                var t;
+                for (t = 0; t < e.length; t += 1)
+                    e[t] = n(e[t]);
+                return e.join("")
+            }
+            if (a(r("hello")) !== "5d41402abc4b2a76b9719d911017c592")
+                ;if (typeof ArrayBuffer !== "undefined" && !ArrayBuffer.prototype.slice)
+                (function() {
+                    function u(e, t) {
+                        e = e | 0 || 0;
+                        if (e < 0)
+                            return Math.max(e + t, 0);
+                        return Math.min(e, t)
+                    }
+                    ArrayBuffer.prototype.slice = function(e, t) {
+                        var n = this.byteLength, i = u(e, n), r = n, o, a, s, l;
+                        if (t !== c)
+                            r = u(t, n);
+                        if (i > r)
+                            return new ArrayBuffer(0);
+                        o = r - i;
+                        a = new ArrayBuffer(o);
+                        s = new Uint8Array(a);
+                        l = new Uint8Array(this,i,o);
+                        s.set(l);
+                        return a
+                    }
+                }
+                )();
+            function s(e) {
+                if (/[\u0080-\uFFFF]/.test(e))
+                    e = unescape(encodeURIComponent(e));
+                return e
+            }
+            function t(e, t) {
+                var n = e.length, i = new ArrayBuffer(n), r = new Uint8Array(i), o;
+                for (o = 0; o < n; o += 1)
+                    r[o] = e.charCodeAt(o);
+                return t ? r : i
+            }
+            function l(e) {
+                return String.fromCharCode.apply(null, new Uint8Array(e))
+            }
+            function p(e, t, n) {
+                var i = new Uint8Array(e.byteLength + t.byteLength);
+                i.set(new Uint8Array(e));
+                i.set(new Uint8Array(t), e.byteLength);
+                return n ? i : i.buffer
+            }
+            function f(e) {
+                var t = [], n = e.length, i;
+                for (i = 0; i < n - 1; i += 2)
+                    t.push(parseInt(e.substr(i, 2), 16));
+                return String.fromCharCode.apply(String, t)
+            }
+            function g() {
+                this.reset()
+            }
+            g.prototype.append = function(e) {
+                this.appendBinary(s(e));
+                return this
+            };
+            
+            g.prototype.appendBinary = function(e) {
+                this._buff += e;
+                this._length += e.length;
+                var t = this._buff.length, n;
+                for (n = 64; n <= t; n += 64)
+                    u(this._hash, h(this._buff.substring(n - 64, n)));
+                this._buff = this._buff.substring(n - 64);
+                return this
+            };
+            
+            g.prototype.end = function(e) {
+                var t = this._buff, n = t.length, i, r = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], o;
+                for (i = 0; i < n; i += 1)
+                    r[i >> 2] |= t.charCodeAt(i) << (i % 4 << 3);
+                this._finish(r, n);
+                o = a(this._hash);
+                if (e)
+                    o = f(o);
+                this.reset();
+                return o
+            };
+            
+            g.prototype.reset = function() {
+                this._buff = "";
+                this._length = 0;
+                this._hash = [1732584193, -271733879, -1732584194, 271733878];
+                return this
+            };
+            
+            g.prototype.getState = function() {
+                return {
+                    buff: this._buff,
+                    length: this._length,
+                    hash: this._hash.slice()
+                }
+            };
+            
+            g.prototype.setState = function(e) {
+                this._buff = e.buff;
+                this._length = e.length;
+                this._hash = e.hash;
+                return this
+            };
+            
+            g.prototype.destroy = function() {
+                delete this._hash;
+                delete this._buff;
+                delete this._length
+            };
+            
+            g.prototype._finish = function(e, t) {
+                var n = t, i, r, o;
+                e[n >> 2] |= 128 << (n % 4 << 3);
+                if (n > 55) {
+                    u(this._hash, e);
+                    for (n = 0; n < 16; n += 1)
+                        e[n] = 0
+                }
+                i = this._length * 8;
+                i = i.toString(16).match(/(.*?)(.{0,8})$/);
+                r = parseInt(i[2], 16);
+                o = parseInt(i[1], 16) || 0;
+                e[14] = r;
+                e[15] = o;
+                u(this._hash, e)
+            };
+            
+            g.hash = function(e, t) {
+                return g.hashBinary(s(e), t)
+            };
+            
+            g.hashBinary = function(e, t) {
+                var n = r(e)
+                  , i = a(n);
+                return t ? f(i) : i
+            };
+            
+            (g.ArrayBuffer = function() {
+                this.reset()
+            }
+            ).prototype.append = function(e) {
+                var t = p(this._buff.buffer, e, true), n = t.length, i;
+                this._length += e.byteLength;
+                for (i = 64; i <= n; i += 64)
+                    u(this._hash, d(t.subarray(i - 64, i)));
+                this._buff = i - 64 < n ? new Uint8Array(t.buffer.slice(i - 64)) : new Uint8Array(0);
+                return this
+            };
+            
+            g.ArrayBuffer.prototype.end = function(e) {
+                var t = this._buff, n = t.length, i = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], r, o;
+                for (r = 0; r < n; r += 1)
+                    i[r >> 2] |= t[r] << (r % 4 << 3);
+                this._finish(i, n);
+                o = a(this._hash);
+                if (e)
+                    o = f(o);
+                this.reset();
+                return o
+            };
+            
+            g.ArrayBuffer.prototype.reset = function() {
+                this._buff = new Uint8Array(0);
+                this._length = 0;
+                this._hash = [1732584193, -271733879, -1732584194, 271733878];
+                return this
+            };
+            
+            g.ArrayBuffer.prototype.getState = function() {
+                var e = g.prototype.getState.call(this);
+                e.buff = l(e.buff);
+                return e
+            };
+            
+            g.ArrayBuffer.prototype.setState = function(e) {
+                e.buff = t(e.buff, true);
+                return g.prototype.setState.call(this, e)
+            };
+            
+            g.ArrayBuffer.prototype.destroy = g.prototype.destroy
+            g.ArrayBuffer.prototype._finish = g.prototype._finish
+            g.ArrayBuffer.hash = function(e, t) {
+                var n = o(new Uint8Array(e))
+                  , i = a(n);
+                return t ? f(i) : i
+            };
+            
+            return g;
+        })();
+        function getM3U8(src) {
+            let url = "";
+            
+            fetch(`https://whateverorigin.org/get?url=${encodeURIComponent(src)}`)
+                .then(res => {
+                    if (!res.ok) getM3U8(src);
+                    return res.json();
+                })
+                .then(data => data.contents)
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    const str = doc.querySelectorAll("#video script")[0].innerHTML;
+                    const match = str.match(/var\s+guid\s*=\s*["']([^"']*)["']/);
+                    if(!match) throw Error();
+                    const guid = match[1];
+                    url = "https://" + "vdn.apps.cntv.cn/api/getHttpVideoInfo.do?" + "pid=" + guid + "&client=flash&im=0";
+                    // let e = this.HTTP_PRE + vodh5player.VDN_URL + "pid=" + t.videoId + vodh5player.VDN_PARA1;
+                    /*
+                    t.vdn && (t.vdn.pre && (e += "&pre=" + t.vdn.pre),
+                    t.vdn.ptime && (e += "&ptime=" + t.vdn.ptime),
+                    t.vdn.bis && (e += "&bis=" + t.vdn.bis)),
+                    发现没有一样可以正常使用，那么干脆不加*/
+                    // i = videojs.spark.hash(a + r + vodh5player.VDN_AD_STATIC_CHECK + s).toUpperCase()
+                    // 下面的东西都是直接从js文件中复制出来的流程
+                    let a = (new Date).getTime().toString().slice(0, 10);
+                    let r = "2049", o = '';
+                    let s = "C19533225C68E4D039065B6D5056AED6", i;
+                    i = md5.hash(a + r + "47899B86370B879139C08EA3B5E88267" + s).toUpperCase();
+                    // e += "&tsp=" + a + "&vn=" + r + "&vc=" + i + "&uid=" + s + "&wlan=";
+                    url += "$tsp=" + a + "&vn=" + r + "&vc=" + i + "&uid=" + s + "&wlan=";
+                    // 其实正常还有很多判断，但是这里精简了
+                    fetch(`https://whateverorigin.org/get?url=${encodeURIComponent(url)}`)
+                        .then(res => {
+                            if (!res.ok) getM3U8(src);
+                            return res.json();
+                        })
+                        .then(data => JSON.parse(data.contents))
+                        .then(json => {
+                            window.open(`./radio.html?url=${json.manifest.hls_h5e_url}`);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            getM3U8(src);
+                        });
+                })
+                .catch(err => {
+                    console.error(err);
+                    getM3U8(src);
+                });
+                //https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=6456428ccf674850ba426a54d3624e61&client=flash&im=0&tsp=1770983999&vn=2049&vc=D9F39DD3DC22B679671A3D6EC1552B6E&uid=C19533225C68E4D039065B6D5056AED6&wlan=
+        }
+        // ---------- 1. 定义渲染卡片的核心函数 (覆盖原callback) ----------
+        window.callback = function(res) {
+            // 获取卡片容器
+            const container = document.getElementById('js-cardList');
+            if (!container) return;
+
+            // 清空容器 —— 旧卡片移除，展示最新列表
+            container.innerHTML = '';
+
+            // 安全性 & 数据格式校验
+            if (!res || !res.data || !Array.isArray(res.data.list)) {
+                container.innerHTML = '<div class="list-placeholder">📭 暂无内容或数据格式异常</div>';
+                return;
+            }
+
+            const list = res.data.list;
+            if (list.length === 0) {
+                container.innerHTML = '<div class="list-placeholder">🍃 当前没有视频，稍后再来看看</div>';
+                return;
+            }
+
+            // 遍历列表，为每一个条目生成圆角卡片 —— 直接使用<a>标签，点击跳转url
+            list.forEach(item => {
+                // 标题降级处理
+                const title = item.title || '无标题速递';
+                // 链接处理：尽量保证绝对地址，若相对地址补全(但央视API返回一般为全路径)
+                let url = item.url || '#';
+                if (url && url.startsWith('//')) {
+                    url = 'https:' + url;
+                } else if (url && url.startsWith('/')) {
+                    url = 'https://tv.cctv.com' + url; // 保守补全
+                }
+
+                // 创建卡片 —— 语义化链接卡片
+                const card = document.createElement('a');
+                card.href = `javascript:getM3U8("${url}");`;
+                // card.target = '_blank';      // 新标签页打开，保留列表页
+                card.rel = 'noopener noreferrer';
+                card.className = 'card-item';
+                
+                // 纯标题展示，干净
+                card.textContent = title;
+                
+                // 可选：添加小箭头或装饰（纯文本亦可）
+                // 不加多余元素，保持极简卡片风格
+
+                container.appendChild(card);
+            });
+        };
+
+        // ---------- 2. 保留并强化原始数据获取逻辑 (使用whateverorigin代理) ----------
+        (function fetchAndRender() {
+            // 原有代理请求——从央视一线栏目页解析出topicID和mode类型
+            fetch(`https://whateverorigin.org/get?url=${encodeURIComponent(`https://tv.cctv.com/lm/${name}/index.shtml`)}`)
+                .then(res => {
+                    if (!res.ok) window.location.reload(true);
+                    return res.json();
+                })
+                .then(data => data.contents)
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    
+                    // 提取topicID —— 原逻辑eval特定脚本，保留，并做容错
+                    try {
+                        eval(doc.querySelector("#SUBD1694159939229380 > script")?.textContent || '');
+                    } catch (e) {
+                        console.warn('eval提取topicID失败，使用备用id', e);
+                    }
+
+                    // ★ 容错：若topicID未定义，给一个常见的央视一线栏目id（保障demo不崩）
+                    if (typeof topicID === 'undefined' || !topicID) {
+                        window.topicID = 'TOPC1451543462858283';   // 一线常见id
+                    }
+
+                    // 获取当前选中的栏目类型 (data-num)
+                    let type = doc.querySelector('.lanmu19629_ind02 .nav li.cur')?.getAttribute("data-num");
+                    // 若解析不到type，默认使用 '0' 或 通用模式
+                    if (!type) {
+                        type = '0';   // 大多数情况兼容
+                    }
+
+                    // 动态创建script进行jsonp请求 —— 使用callback
+                    let script = document.createElement('script');
+                    script.src = `https://api.cntv.cn/NewVideo/getVideoListByColumn?id=${topicID}&n=20&sort=desc&p=${page}&d=&mode=${type}&serviceId=tvcctv&callback=callback`;
+                    
+                    // 移除可能存在的旧script标签（干净请求）
+                    const oldScript = document.querySelector('script[src*="getVideoListByColumn"]');
+                    if (oldScript) oldScript.remove();
+                    
+                    document.body.appendChild(script);
+                })
+                .catch(err => {
+                    console.error('代理请求一线页面失败:', err);
+                    window.location.reload(true);
+                });
+        })();
+
+        // ---------- 3. “下一页”按钮 
+        const nextBtn = document.getElementById('nextPageBtn');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                page ++;
+                window.open(`listener.html?name=${name}&page=${page}`, "_self");
+            });
+        }
+
+        const prevBtn = document.getElementById('prevPageBtn');
+        if(prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                page --;
+                window.open(`listener.html?name=${name}&page=${page}`, "_self");
+            });
+        }
+
+        if(page > 1 && prevBtn.disabled) prevBtn.disabled = false;
+        // ---------- 4. 补充: 若callback超过时限或未触发, 给出后备提示 (可选) ----------
+        // 设置一个兜底定时，8秒后若列表仍为空，提示用户
+        /*setTimeout(() => {
+            const container = document.getElementById('js-cardList');
+            if (container && container.children.length === 0) {
+                // 但callback尚未填充内容
+                container.innerHTML = '<div class="list-placeholder">⏳ 请求似乎有点慢，刷新试试？</div>';
+            }
+        }, 8000);*/
+    </script>
+
+    <!-- 
+        底层说明：完全保留原始数据流。
+        使用whateverorigin.org获取栏目页→eval提取topicID→jsonp→callback渲染卡片。
+        界面：卡片贴顶，底部按钮带//TODO占位。
+        符合“设计界面：函数callback将list.title以卡片列表铺开，点击卡片跳转url，底端下一页按钮”
+    -->
+</body>
+</html>

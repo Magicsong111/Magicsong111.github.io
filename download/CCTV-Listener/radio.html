@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 这个页面也是AI写的......还是老样子，实现爬虫部分 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>M3U8 电台</title>
+    <!-- 引入 hls.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body {
+            background: #01a285;                /* 新背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+        }
+
+        .radio-card {
+            background: #f0faf8;                /* 极浅绿卡片，与背景呼应 */
+            color: #1e3b4a;                      /* 深蓝灰文字，保证对比度 */
+            border-radius: 32px;
+            padding: 30px 24px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 50, 30, 0.25); /* 阴影带一点绿调 */
+        }
+
+        .status {
+            background: #d4ece5;                /* 浅绿状态条 */
+            padding: 12px;
+            border-radius: 60px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #006b5e;                      /* 深绿色文字 */
+            word-break: break-all;
+        }
+
+        button {
+            background: #ff8a5c;                 /* 暖橙色按钮，点亮界面 */
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 14px 28px;
+            border-radius: 40px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 0 #b1451a;          /* 深橙色阴影，保持按压效果 */
+        }
+
+        button:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #b1451a;
+        }
+
+        .small {
+            font-size: 0.8rem;
+            color: #5f7b8c;                       /* 柔和蓝灰，与整体协调 */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="radio-card">
+        <h2>📻 M3U8 电台</h2>
+        <!-- 纯音频元素，完全不可见，但承载所有音频输出 -->
+        <audio id="audioPlayer" controls style="width:100%; margin:15px 0; border-radius:20px;"></audio>
+        
+        <div class="status" id="statusMsg">⏸️ 未播放</div>
+        
+        <button id="playBtn">▶ 加载音频</button>
+        <p class="small">
+            ✅ 后台播放可用 · 仅提取声音<br>
+            (需先点击按钮，由用户手势启动)
+        </p>
+    </div>
+
+    <script>
+        // ---------- 你的网络 m3u8 地址（替换为实际源） ----------
+        const M3U8_URL = new URLSearchParams(window.location.search).get('url');
+        // ↑ 此处是 Apple 示例流（含视频），但我们将只播放音频，完全忽略画面
+        
+        const audioEl = document.getElementById('audioPlayer');
+        const statusEl = document.getElementById('statusMsg');
+        const playBtn = document.getElementById('playBtn');
+
+        let hls = null;
+
+        // ---------- 加载并播放 HLS 音频流 ----------
+        function loadAndPlay() {
+            statusEl.innerText = '⏳ 加载音频流...';
+
+            // 如果已有 hls 实例，先销毁
+            if (hls) {
+                hls.destroy();
+                hls = null;
+            }
+
+            // 方案1: 使用 hls.js (兼容所有现代浏览器，包括 Android Chrome / iOS Safari)
+            if (Hls.isSupported()) {
+                hls = new Hls({
+                    // 只加载音频轨，大幅节省带宽
+                    audio: true,
+                    video: false,        // 强制不加载视频
+                    enableWorker: true,
+                    // 还可以进一步配置仅选择音频
+                });
+
+                // 绑定到 <audio> 元素
+                hls.attachMedia(audioEl);
+                hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+                    console.log('HLS: media attached');
+                    hls.loadSource(M3U8_URL);
+                });
+
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    console.log('HLS: manifest parsed, 尝试播放');
+                    // 自动播放必须由用户手势触发，这里 play() 已在按钮点击回调内
+                    audioEl.play()
+                        .then(() => statusEl.innerText = '🎵 播放中 (纯音频/后台)')
+                        .catch(e => {
+                            statusEl.innerText = '⚠️ 自动播放被阻止，请再次点击';
+                            console.error(e);
+                        });
+                });
+
+                hls.on(Hls.Events.ERROR, (event, data) => {
+                    if (data.fatal) {
+                        statusEl.innerText = '❌ 流错误，请检查地址';
+                        console.error('HLS error:', data);
+                    }
+                });
+            } 
+            // 方案2: 原生 HLS 支持 (Safari / 部分 iOS) —— 直接设置 src 即可
+            else if (audioEl.canPlayType('application/vnd.apple.mpegurl')) {
+                audioEl.src = M3U8_URL;
+                audioEl.play()
+                    .then(() => statusEl.innerText = '🎵 播放中 (原生HLS/后台)')
+                    .catch(e => statusEl.innerText = '⚠️ 请点击播放按钮');
+            } else {
+                statusEl.innerText = '❌ 当前浏览器不支持 HLS 音频';
+                alert('您的浏览器不支持 HLS 播放，请升级或使用 Chrome/Safari 最新版');
+            }
+        }
+
+        // ---------- 用户手势启动（必须！移动端禁止自动播放音频）----------
+        playBtn.addEventListener('click', () => {
+            loadAndPlay();
+        });
+
+        // 状态监听（可选）
+        audioEl.addEventListener('playing', () => {
+            statusEl.innerText = '🎵 播放中 (纯音频/后台)';
+        });
+        audioEl.addEventListener('pause', () => {
+            statusEl.innerText = '⏸️ 已暂停';
+        });
+        audioEl.addEventListener('ended', () => {
+            statusEl.innerText = '⏹️ 播放结束';
+        });
+        audioEl.addEventListener('error', (e) => {
+            statusEl.innerText = '🔇 播放错误';
+            console.error('Audio error:', e);
+        });
+    </script>
+</body>
+</html>

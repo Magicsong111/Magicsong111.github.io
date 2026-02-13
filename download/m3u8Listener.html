@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>M3U8电台</title>
+    <style>
+        /* ===== 全局重置（与原风格完全一致） ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #01a285;      /* 原背景色 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1e2a3a;
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 16px;                  /* 小屏留边距，卡片仍居中 */
+        }
+
+        /* ===== 白色卡片 ===== */
+        .input-card {
+            background-color: white;
+            border-radius: 28px;             /* 与原卡片圆角一致（20-28之间取中） */
+            padding: 32px 24px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 30, 20, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);   /* 原卡片边框效果 */
+            backdrop-filter: blur(2px);       /* 保留原卡片毛玻璃感 */
+            transition: transform 0.2s ease;
+        }
+
+        /* 卡片标题（新增，但字体颜色沿用原卡片文字色） */
+        .input-card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #0b1c2e;                   /* 原卡片文字色 */
+            letter-spacing: -0.2px;
+        }
+
+        /* ===== 输入框 ===== */
+        .input-field {
+            width: 100%;
+            padding: 16px 18px;
+            font-size: 16px;
+            font-family: inherit;
+            border: 1px solid #d4e0e9;
+            border-radius: 60px;               /* 大圆角，与原状态条/按钮一致 */
+            background-color: #f9fbfd;
+            color: #1e2a3a;
+            outline: none;
+            transition: all 0.2s;
+            margin-bottom: 24px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .input-field:focus {
+            border-color: #0a58ca;              /* 聚焦蓝色，与原按钮蓝呼应 */
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(10, 88, 202, 0.1), inset 0 1px 3px #fff;
+        }
+
+        .input-field::placeholder {
+            color: #8a9eb0;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* ===== 按钮 ===== */
+        .action-btn {
+            background: white;
+            border: none;
+            border-radius: 60px;
+            padding: 16px 28px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #0a58ca;                      /* 原.next-btn 蓝色 */
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 14px rgba(10, 88, 202, 0.08);
+            border: 1px solid rgba(10, 88, 202, 0.15);
+            transition: 0.2s;
+            width: 100%;
+            cursor: pointer;
+            background-color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            background: #f0f4fe;
+            border-color: #0a58ca;
+            box-shadow: 0 10px 20px rgba(10, 88, 202, 0.12);
+        }
+
+        .action-btn:active {
+            transform: translateY(2px);          /* 原按钮按压下移效果 */
+            box-shadow: 0 4px 10px rgba(10,88,202,0.1);
+        }
+
+        /* ===== 小屏优化 ===== */
+        @media (max-width: 480px) {
+            .input-card {
+                padding: 28px 20px;
+                border-radius: 24px;
+            }
+            .input-field {
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+            .action-btn {
+                padding: 14px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="input-card">
+        <h2>📻 以音频模式播放m3u8</h2>
+        <input type="text" class="input-field" id="nameInput" placeholder="输入m3u8的网址" autofocus>
+        <button class="action-btn" id="goBtn">聆听！</button>
+        <p style="font-size: x-small;">例:<br> https://vip15.play-cdn15.com/20230406/6582_22acb9a7/index.m3u8</p>
+    </div>
+
+    <script>
+        (function() {
+            const input = document.getElementById('nameInput');
+            const btn = document.getElementById('goBtn');
+
+            function navigateToListener() {
+                let nameValue = input.value.trim();
+                if (nameValue === '') {
+                    alert('请输入！');    // 空值时友好提示（也可直接跳转，此处选择提醒）
+                    input.focus();
+                    return;
+                }
+                const encoded = encodeURIComponent(nameValue);
+                window.location.href = `./CCTV-Listener/radio.html?url=${encoded}`;
+            }
+
+            btn.addEventListener('click', navigateToListener);
+
+            // 支持键盘回车
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    navigateToListener();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
