@@ -634,7 +634,7 @@
                         })
                         .then(data => JSON.parse(data.contents))
                         .then(json => {
-                            window.open(`./radio.html?url=${json.manifest.hls_h5e_url}`);
+                            window.location.href = `./radio.html?url=${json.manifest.hls_h5e_url}`;
                         })
                         .catch(err => {
                             console.error(err);
@@ -750,7 +750,7 @@
         if (nextBtn) {
             nextBtn.addEventListener('click', function() {
                 page ++;
-                window.open(`listener.html?name=${name}&page=${page}`, "_self");
+                window.location.href = `listener.html?name=${name}&page=${page}`;
             });
         }
 
@@ -758,7 +758,7 @@
         if(prevBtn) {
             prevBtn.addEventListener('click', function() {
                 page --;
-                window.open(`listener.html?name=${name}&page=${page}`, "_self");
+                window.location.href = `listener.html?name=${name}&page=${page}`;
             });
         }
 
