@@ -702,9 +702,8 @@
             fetch('/api/fetch-web?url=' + `https://tv.cctv.com/lm/${name}/index.shtml`)
                 .then(res => {
                     if (!res.ok) return null;
-                    return res.json();
+                    return res.text();
                 })
-                .then(data => data.contents)
                 .then(html => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, "text/html");
