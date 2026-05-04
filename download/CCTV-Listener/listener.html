@@ -598,9 +598,9 @@
         function getM3U8(src) {
             let url = "";
             
-            fetch(`https://whateverorigin.org/get?url=${encodeURIComponent(src)}`)
+            fetch(src)
                 .then(res => {
-                    if (!res.ok) getM3U8(src);
+                    if (!res.ok) return null;
                     return res.json();
                 })
                 .then(data => data.contents)
@@ -611,7 +611,7 @@
                     const match = str.match(/var\s+guid\s*=\s*["']([^"']*)["']/);
                     if(!match) throw Error();
                     const guid = match[1];
-                    url = "https://" + "vdn.apps.cntv.cn/api/getHttpVideoInfo.do?" + "pid=" + guid + "&client=flash&im=0";
+                    url = "/api/cctv" + "pid=" + guid + "&client=flash&im=0";
                     // let e = this.HTTP_PRE + vodh5player.VDN_URL + "pid=" + t.videoId + vodh5player.VDN_PARA1;
                     /*
                     t.vdn && (t.vdn.pre && (e += "&pre=" + t.vdn.pre),
@@ -627,9 +627,9 @@
                     // e += "&tsp=" + a + "&vn=" + r + "&vc=" + i + "&uid=" + s + "&wlan=";
                     url += "$tsp=" + a + "&vn=" + r + "&vc=" + i + "&uid=" + s + "&wlan=";
                     // 其实正常还有很多判断，但是这里精简了
-                    fetch(`https://whateverorigin.org/get?url=${encodeURIComponent(url)}`)
+                    fetch(url)
                         .then(res => {
-                            if (!res.ok) getM3U8(src);
+                            if (!res.ok) return null;
                             return res.json();
                         })
                         .then(data => JSON.parse(data.contents))
@@ -638,12 +638,12 @@
                         })
                         .catch(err => {
                             console.error(err);
-                            getM3U8(src);
+                            return null;
                         });
                 })
                 .catch(err => {
                     console.error(err);
-                    getM3U8(src);
+                    return null;
                 });
                 //https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=6456428ccf674850ba426a54d3624e61&client=flash&im=0&tsp=1770983999&vn=2049&vc=D9F39DD3DC22B679671A3D6EC1552B6E&uid=C19533225C68E4D039065B6D5056AED6&wlan=
         }
@@ -682,7 +682,7 @@
 
                 // 创建卡片 —— 语义化链接卡片
                 const card = document.createElement('a');
-                card.href = `javascript:getM3U8("${url}");`;
+                card.href = `javascript:getM3U8('/api/fetch-web?url=' + encodeURIComponent("${url}"));`;
                 // card.target = '_blank';      // 新标签页打开，保留列表页
                 card.rel = 'noopener noreferrer';
                 card.className = 'card-item';
@@ -700,9 +700,9 @@
         // ---------- 2. 保留并强化原始数据获取逻辑 (使用whateverorigin代理) ----------
         (function fetchAndRender() {
             // 原有代理请求——从央视一线栏目页解析出topicID和mode类型
-            fetch(`https://whateverorigin.org/get?url=${encodeURIComponent(`https://tv.cctv.com/lm/${name}/index.shtml`)}`)
+            fetch('/api/fetch-web?url=' + `https://tv.cctv.com/lm/${name}/index.shtml`)
                 .then(res => {
-                    if (!res.ok) window.location.reload(true);
+                    if (!res.ok) return null;
                     return res.json();
                 })
                 .then(data => data.contents)
@@ -741,7 +741,6 @@
                 })
                 .catch(err => {
                     console.error('代理请求一线页面失败:', err);
-                    window.location.reload(true);
                 });
         })();
 
