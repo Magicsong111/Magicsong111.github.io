@@ -601,9 +601,8 @@
             fetch(src)
                 .then(res => {
                     if (!res.ok) return null;
-                    return res.json();
+                    return res.text();
                 })
-                .then(data => data.contents)
                 .then(html => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, "text/html");
@@ -611,7 +610,7 @@
                     const match = str.match(/var\s+guid\s*=\s*["']([^"']*)["']/);
                     if(!match) throw Error();
                     const guid = match[1];
-                    url = "/api/cctv" + "pid=" + guid + "&client=flash&im=0";
+                    url = "/api/cctv?" + "pid=" + guid + "&client=flash&im=0";
                     // let e = this.HTTP_PRE + vodh5player.VDN_URL + "pid=" + t.videoId + vodh5player.VDN_PARA1;
                     /*
                     t.vdn && (t.vdn.pre && (e += "&pre=" + t.vdn.pre),
