@@ -1,0 +1,420 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Exceptions</title>
+    </head>
+    <body>
+        <h2>System</h2>
+        <table border="1">
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.accessviolationexception?view=net-8.0">AccessViolationException</a></td>
+                <td>在试图读写受保护内存时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.aggregateexception?view=net-8.0">AggregateException</a></td>
+                <td>表示在应用程序执行过程中发生的一个或多个错误。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.appdomainunloadedexception?view=net-8.0">AppDomainUnloadedException</a></td>
+                <td>当尝试访问已卸载的应用程序域时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.applicationexception?view=net-8.0">ApplicationException</a></td>
+                <td>用作应用程序定义的异常的基类。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.argumentexception?view=net-8.0">ArgumentException</a></td>
+                <td>当向方法提供的参数之一无效时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.argumentnullexception?view=net-8.0">ArgumentNullException</a></td>
+                <td>当将 null 引用（Visual Basic 中为 Nothing）传递到不接受其作为有效参数的方法时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.argumentoutofrangeexception?view=net-8.0">ArgumentOutOfRangeException</a></td>
+                <td>当自变量的值超出了所调用方法定义的允许值范围时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.arithmeticexception?view=net-8.0">ArithmeticException</a></td>
+                <td>当算术、强制转换或转换操作发生错误时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.arraytypemismatchexception?view=net-8.0">ArrayTypeMismatchException</a></td>
+                <td>当尝试在数组内存储错误类型的元素时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.badimageformatexception?view=net-8.0">BadImageFormatException</a></td>
+                <td>当动态链接库 (DLL) 或可执行程序的文件映像无效时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.cannotunloadappdomainexception?view=net-8.0">CannotUnloadAppDomainException</a></td>
+                <td>当尝试卸载应用程序域失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.contextmarshalexception?view=net-8.0">ContextMarshalException</a></td>
+                <td>在尝试跨上下文边界封送对象失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.datamisalignedexception?view=net-8.0">DataMisalignedException</a></td>
+                <td>当在某个地址读取或写入一个单元的数据，但该地址的数据大小不是该数据单元的整数倍时引发的异常。 此类不能被继承。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.dividebyzeroexception?view=net-8.0">DivideByZeroException</a></td>
+                <td>尝试将整数或 Decimal 值除以零时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.dllnotfoundexception?view=net-8.0">DllNotFoundException</a></td>
+                <td>当未找到在 DLL 导入中指定的 DLL 时所引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.duplicatewaitobjectexception?view=net-8.0">DuplicateWaitObjectException</a></td>
+                <td>当对象在同步对象数组中多次出现时引发异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.entrypointnotfoundexception?view=net-8.0">EntryPointNotFoundException</a></td>
+                <td>因不存在项方法而导致加载类的尝试失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.exception?view=net-8.0">Exception</a></td>
+                <td>表示在应用程序执行期间出现的错误。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.executionengineexception?view=net-8.0">ExecutionEngineException</a></td>
+                <td>当公共语言运行时的执行引擎中存在内部错误时引发的异常。 此类不能被继承。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.fieldaccessexception?view=net-8.0">FieldAccessException</a></td>
+                <td>无效地尝试访问类中的私有或受保护字段时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.formatexception?view=net-8.0">FormatException</a></td>
+                <td>当自变量的格式无效或复合格式字符串的格式不标准时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.indexoutofrangeexception?view=net-8.0">IndexOutOfRangeException</a></td>
+                <td>试图访问索引超出界限的数组或集合的元素时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.insufficientexecutionstackexception?view=net-8.0">InsufficientExecutionStackException</a></td>
+                <td>当存在的执行堆栈不足以允许大多数方法执行时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.insufficientmemoryexception?view=net-8.0">InsufficientMemoryException</a></td>
+                <td>当检测到没有足够的可用内存时引发的异常。 此类不能被继承。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.invalidcastexception?view=net-8.0">InvalidCastException</a></td>
+                <td>当执行了无效的强制转换或显式转换时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.invalidoperationexception?view=net-8.0">InvalidOperationException</a></td>
+                <td>当方法调用对于对象的当前状态无效时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.invalidprogramexception?view=net-8.0">InvalidProgramException</a></td>
+                <td>当程序包含无效的 Microsoft 中间语言 (MSIL) 或元数据时引发的异常。 这通常表示生成该程序的编译器中存在 bug。 当程序超出内部运行时实现限制时，也会引发此异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.invalidtimezoneexception?view=net-8.0">InvalidTimeZoneException</a></td>
+                <td>当时区信息无效时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.memberaccessexception?view=net-8.0">MemberAccessException</a></td>
+                <td>访问类成员的尝试失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.methodaccessexception?view=net-8.0">MethodAccessException</a></td>
+                <td>无效地尝试访问方法时（例如从部分信任的代码访问私有方法）引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.missingfieldexception?view=net-8.0">MissingFieldException</a></td>
+                <td>尝试动态访问不存在的字段时引发的异常。 如果类库中的某个字段已被移除或重命名，请重新编译引用该库的所有程序集。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.missingmemberexception?view=net-8.0">MissingMemberException</a></td>
+                <td>当尝试动态访问一个不存在或未声明为 public 的类成员时引发的异常。 如果类库中的某个成员已移除或重命名，请重新编译引用该库的所有程序集。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.missingmethodexception?view=net-8.0">MissingMethodException</a></td>
+                <td>尝试动态访问不存在的方法时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.multicastnotsupportedexception?view=net-8.0">MulticastNotSupportedException</a></td>
+                <td>尝试组合两个基于 Delegate 类型而非 MulticastDelegate 类型的委托时引发的异常。 此类不能被继承。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.notfinitenumberexception?view=net-8.0">NotFiniteNumberException</a></td>
+                <td>当浮点值为正无穷大、负无穷大或非数字 (NaN) 时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.notimplementedexception?view=net-8.0">NotImplementedException</a></td>
+                <td>在无法实现请求的方法或操作时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.notsupportedexception?view=net-8.0">NotSupportedException</a></td>
+                <td>当调用的方法不受支持时，或者当尝试读取、搜索或写入不支持所调用功能的流时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.nullreferenceexception?view=net-8.0">NullReferenceException</a></td>
+                <td>尝试取消引用空对象引用时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.objectdisposedexception?view=net-8.0">ObjectDisposedException</a></td>
+                <td>对已释放的对象执行操作时所引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.operationcanceledexception?view=net-8.0">OperationCanceledException</a></td>
+                <td>当线程取消一个正在执行的操作时在线程中引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.outofmemoryexception?view=net-8.0">OutOfMemoryException</a></td>
+                <td>没有足够的内存继续执行程序时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.overflowexception?view=net-8.0">OverflowException</a></td>
+                <td>当在检查的上下文中执行的算术、强制转换或转换运算导致溢出时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.platformnotsupportedexception?view=net-8.0">PlatformNotSupportedException</a></td>
+                <td>当功能不在特定平台上运行时引发的操作。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.rankexception?view=net-8.0">RankException</a></td>
+                <td>将具有错误维数的数组传入方法时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.stackoverflowexception?view=net-8.0">StackOverflowException</a></td>
+                <td>执行堆栈超过堆栈大小时引发的异常。 此类不能被继承。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.systemexception?view=net-8.0">SystemException</a></td>
+                <td>用作系统异常命名空间的基类。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.timeoutexception?view=net-8.0">TimeoutException</a></td>
+                <td>当为进程或操作分配的时间已过期时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.timezonenotfoundexception?view=net-8.0">TimeZoneNotFoundException</a></td>
+                <td>找不到时区时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.typeaccessexception?view=net-8.0">TypeAccessException</a></td>
+                <td>当方法试图使用它无权访问的类型时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.typeinitializationexception?view=net-8.0">TypeInitializationException</a></td>
+                <td>作为类初始值设定项引发的异常的包装器而引发的异常。 此类不能被继承。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.typeloadexception?view=net-8.0">TypeLoadException</a></td>
+                <td>当发生类型加载失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.typeunloadedexception?view=net-8.0">TypeUnloadedException</a></td>
+                <td>尝试访问已卸载的类时所引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.unauthorizedaccessexception?view=net-8.0">UnauthorizedAccessException</a></td>
+                <td>当操作系统因 I/O 错误或指定类型的安全错误而拒绝访问时所引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.unhandledexceptioneventargs?view=net-8.0">UnhandledExceptionEventArgs</a></td>
+                <td>为以下情况下引发的事件提供数据：存在一个不是在任何应用程序域中处理的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.uriformatexception?view=net-8.0">UriFormatException</a></td>
+                <td>当检测到无效的统一资源标识符 (URI) 时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.uritemplatematchexception?view=net-8.0">UriTemplateMatchException</a></td>
+                <td>表示将 Uri 与 UriTemplateTable 匹配时发生的错误。</td>
+            </tr>
+        </table>
+        <h2>System.IO</h2>
+        <table border="1">
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.directorynotfoundexception?view=net-8.0">DirectoryNotFoundException</a></td>
+                <td>找不到文件或目录的部件时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.drivenotfoundexception?view=net-8.0">DriveNotFoundException</a></td>
+                <td>当尝试访问的驱动器或共享不可用时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.endofstreamexception?view=net-8.0">EndOfStreamException</a></td>
+                <td>尝试在流末尾之后读取时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.fileformatexception?view=net-8.0">FileFormatException</a></td>
+                <td>应该符合一定文件格式规范的输入文件或数据流的格式不正确时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.fileloadexception?view=net-8.0">FileLoadException</a></td>
+                <td>找到托管程序集但不能加载时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.filenotfoundexception?view=net-8.0">FileNotFoundException</a></td>
+                <td>尝试访问磁盘上不存在的文件失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.internalbufferoverflowexception?view=net-8.0">InternalBufferOverflowException</a></td>
+                <td>内部缓冲区溢出时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.invaliddataexception?view=net-8.0">InvalidDataException</a></td>
+                <td>数据流格式无效时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.ioexception?view=net-8.0">IOException</a></td>
+                <td>发生 I/O 错误时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.pathtoolongexception?view=net-8.0">PathTooLongException</a></td>
+                <td>当路径名或完全限定的文件名长度超过系统定义的最大长度时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.io.pipeexception?view=net-8.0">PipeException</a></td>
+                <td>当命名管道内出现错误时引发。</td>
+            </tr>
+        </table>
+        <h2>System.Collections.Generic</h2>
+        <table border="1">
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.collections.generic.keynotfoundexception?view=net-8.0">KeyNotFoundException</a></td>
+                <td>当指定用于访问集合中元素的键与集合中的任意键均不匹配时所引发的异常。</td>
+            </tr>
+        </table>
+        <h2>System.Xml</h2>
+        <table border="1">
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.xml.xmlexception?view=net-8.0">XmlException</a></td>
+                <td>返回有关上一个异常的详细信息。</td>
+            </tr>
+        </table>
+        <h2>System.Data</h2>
+        <table border="1">
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.constraintexception?view=dotnet-plat-ext-8.0">ConstraintException</a></td>
+                <td>表示在尝试执行违反约束的操作时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.dataexception?view=dotnet-plat-ext-8.0">DataException</a></td>
+                <td>表示使用 ADO.NET 组件发生错误时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.dbconcurrencyexception?view=dotnet-plat-ext-8.0">DBConcurrencyException</a></td>
+                <td>在插入、更新或删除操作过程中当受影响的行数等于零时由 DataAdapter 引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.deletedrowinaccessibleexception?view=dotnet-plat-ext-8.0">DeletedRowInaccessibleException</a></td>
+                <td>表示尝试在已删除的 DataRow 上执行操作时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.duplicatenameexception?view=dotnet-plat-ext-8.0">DuplicateNameException</a></td>
+                <td>表示在 DataSet — 相关对象添加操作的过程中，遇到重复的数据库对象名称时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.entitycommandcompilationexception?view=dotnet-plat-ext-8.0">EntityCommandCompilationException</a></td>
+                <td>表示命令编译过程中发生的错误；当无法生成命令树来表示命名文本时。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.entitycommandexecutionexception?view=dotnet-plat-ext-8.0">EntityCommandExecutionException</a></td>
+                <td>表示当基础存储提供程序未能执行指定的命令时发生的错误。 此异常通常包装一个提供程序特定的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.entityexception?view=dotnet-plat-ext-8.0">EntityException</a></td>
+                <td>表示 EntityClient 命名空间中发生的与 Entity Framework 相关的错误。 EntityException 是 EntityClient 类所引发的所有 Entity Framework 异常的基类。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.entitysqlexception?view=dotnet-plat-ext-8.0">EntitySqlException</a></td>
+                <td>表示分析 Entity SQL 命令文本时出现的错误。 违反语法或语义规则时，引发此异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.evaluateexception?view=dotnet-plat-ext-8.0">EvaluateException</a></td>
+                <td>表示无法计算 DataColumn 的 Expression 属性时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.inrowchangingeventexception?view=dotnet-plat-ext-8.0">InRowChangingEventException</a></td>
+                <td>表示在 EndEdit() 事件中调用 RowChanging 方法时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.invalidcommandtreeexception?view=dotnet-plat-ext-8.0">InvalidCommandTreeException</a></td>
+                <td>引发来指示命令目录树无效的异常。 当前，在 Entity Framework 中的任何位置都不会引发此异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.invalidconstraintexception?view=dotnet-plat-ext-8.0">InvalidConstraintException</a></td>
+                <td>表示在不正确地尝试创建或访问关系时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.invalidexpressionexception?view=dotnet-plat-ext-8.0">InvalidExpressionException</a></td>
+                <td>表示在尝试将包含无效 DataColumn 的 Expression 添加到 DataColumnCollection 中时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.mappingexception?view=dotnet-plat-ext-8.0">MappingException</a></td>
+                <td>当映射相关服务请求失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.metadataexception?view=dotnet-plat-ext-8.0">MetadataException</a></td>
+                <td>当元数据相关服务请求失败时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.missingprimarykeyexception?view=dotnet-plat-ext-8.0">MissingPrimaryKeyException</a></td>
+                <td>表示在尝试访问没有主键的表中的行时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.nonullallowedexception?view=dotnet-plat-ext-8.0">NoNullAllowedException</a></td>
+                <td>表示在尝试将 NULL 值插入 AllowDBNull 设置为 false 的列中时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.objectnotfoundexception?view=dotnet-plat-ext-8.0">ObjectNotFoundException</a></td>
+                <td>当对象不存在时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.operationabortedexception?view=dotnet-plat-ext-8.0">OperationAbortedException</a></td>
+                <td>当用户中止正在执行的某操作时，将引发此异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.optimisticconcurrencyexception?view=dotnet-plat-ext-8.0">OptimisticConcurrencyException</a></td>
+                <td>开放式并发冲突发生时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.propertyconstraintexception?view=dotnet-plat-ext-8.0">PropertyConstraintException</a></td>
+                <td>属性限制异常类。 注意此类有状态- 因此如果即使您更改其内部，它可能是重大更改。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.providerincompatibleexception?view=dotnet-plat-ext-8.0">ProviderIncompatibleException</a></td>
+                <td>基础数据提供程序与实体框架不兼容时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.readonlyexception?view=dotnet-plat-ext-8.0">ReadOnlyException</a></td>
+                <td>表示在尝试更改只读列的值时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.rownotintableexception?view=dotnet-plat-ext-8.0">RowNotInTableException</a></td>
+                <td>表示尝试在不位于 DataRow 中的 DataTable 上执行操作时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.strongtypingexception?view=dotnet-plat-ext-8.0">StrongTypingException</a></td>
+                <td>在用户访问 DBNull 值时，强类型 DataSet 引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.syntaxerrorexception?view=dotnet-plat-ext-8.0">SyntaxErrorException</a></td>
+                <td>表示当 DataColumn 的 Expression 属性包含语法错误时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.typeddatasetgeneratorexception?view=dotnet-plat-ext-8.0">TypedDataSetGeneratorException</a></td>
+                <td>当生成强类型 DataSet 的过程中发生名称冲突时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.updateexception?view=dotnet-plat-ext-8.0">UpdateException</a></td>
+                <td>对对象实例的修改无法保持到数据源时引发的异常。</td>
+            </tr>
+            <tr>
+                <td><a href="https://learn.microsoft.com/zh-cn/dotnet/api/system.data.versionnotfoundexception?view=dotnet-plat-ext-8.0">VersionNotFoundException</a></td>
+                <td>表示尝试返回已删除的 DataRow 版本时引发的异常。</td>
+            </tr>
+        </table>
+    </body>
+</html>
+

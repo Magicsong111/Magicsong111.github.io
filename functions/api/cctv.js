@@ -28,7 +28,7 @@ export async function onRequest(context) {
             status: apiResponse.status,
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': 'https://www.magicsong.cn.mt/',
                 'Access-Control-Allow-Methods': 'GET, OPTIONS',
                 'Cache-Control': 'public, max-age=300'  // 可选：缓存5分钟
             }
@@ -38,7 +38,7 @@ export async function onRequest(context) {
             status: 502,
             headers: { 
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': 'https://www.magicsong.cn.mt/'
             }
         });
     }
@@ -49,7 +49,7 @@ export const onRequestOptions = async () => {
     return new Response(null, {
         status: 204,
         headers: {
-            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': 'https://www.magicsong.cn.mt/',
             'Access-Control-Allow-Methods': 'GET, OPTIONS',
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Max-Age': '86400'

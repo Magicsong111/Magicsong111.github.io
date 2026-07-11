@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>一线 · 央视卡片列表</title>
+    <title>央视</title>
     <style>
         /* 全局重置 —— 真正贴顶，无干扰边距 */
         * {
@@ -26,9 +27,10 @@
             min-height: 100vh;
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;     /* 大屏居中，依然贴顶 */
+            margin: 0 auto;
+            /* 大屏居中，依然贴顶 */
             background-color: #01a285;
-            box-shadow: 0 0 20px rgba(0,0,0,0.02);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.02);
         }
 
         /* 卡片容器——严格从顶端开始，0间距 */
@@ -36,8 +38,10 @@
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;          /* 卡片之间的间隙，但顶部无间隙 */
-            padding: 0 16px 16px 16px;  /* 顶部内边距为0，完美贴顶！ */
+            gap: 12px;
+            /* 卡片之间的间隙，但顶部无间隙 */
+            padding: 0 16px 16px 16px;
+            /* 顶部内边距为0，完美贴顶！ */
             width: 100%;
             overflow-y: auto;
             background-color: #01a285;
@@ -89,7 +93,7 @@
         .footer-bar {
             padding: 20px 16px 24px;
             background: #01a285;
-            border-top: 1px solid rgba(0,0,0,0.04);
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -121,7 +125,7 @@
 
         .next-btn:active {
             transform: translateY(2px);
-            box-shadow: 0 4px 10px rgba(10,88,202,0.1);
+            box-shadow: 0 4px 10px rgba(10, 88, 202, 0.1);
         }
 
         .next-btn:disabled {
@@ -150,18 +154,22 @@
                 padding: 0 12px 12px;
                 gap: 10px;
             }
+
             .card-item {
                 padding: 16px 18px;
                 border-radius: 18px;
                 font-size: 15px;
             }
+
             .next-btn {
                 padding: 12px 20px;
                 font-size: 16px;
             }
         }
     </style>
+    <script src="/js/jquery.min.js"></script>
 </head>
+
 <body>
     <div class="app-wrapper">
         <!-- 
@@ -183,7 +191,7 @@
         var para = new URLSearchParams(window.location.search);
         var page = para.get('page');
         var name = para.get('name');
-        if(page === null || name === null) throw ReferenceError();
+        if (page === null || name === null) throw ReferenceError();
         // AI太强了......我只实现了爬虫和代理部分，剩下设计完全都交给AI了
 
         // ======================================================
@@ -196,13 +204,13 @@
 
         // 这一坨东西是我从官方的js中截到的，大体意思是实现了一个简单的md5
         // 几乎没做修改，直接加进来了
-        const md5 = (function() {
+        const md5 = (function () {
             var i = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
             function u(e, t) {
                 var n = e[0]
-                  , i = e[1]
-                  , r = e[2]
-                  , o = e[3];
+                    , i = e[1]
+                    , r = e[2]
+                    , o = e[3];
                 n += (i & r | ~i & o) + t[0] - 680876936 | 0;
                 n = (n << 7 | n >>> 25) + i | 0;
                 o += (n & i | ~n & r) + t[1] - 389564586 | 0;
@@ -409,15 +417,15 @@
                 return e.join("")
             }
             if (a(r("hello")) !== "5d41402abc4b2a76b9719d911017c592")
-                ;if (typeof ArrayBuffer !== "undefined" && !ArrayBuffer.prototype.slice)
-                (function() {
+                ; if (typeof ArrayBuffer !== "undefined" && !ArrayBuffer.prototype.slice)
+                (function () {
                     function u(e, t) {
                         e = e | 0 || 0;
                         if (e < 0)
                             return Math.max(e + t, 0);
                         return Math.min(e, t)
                     }
-                    ArrayBuffer.prototype.slice = function(e, t) {
+                    ArrayBuffer.prototype.slice = function (e, t) {
                         var n = this.byteLength, i = u(e, n), r = n, o, a, s, l;
                         if (t !== c)
                             r = u(t, n);
@@ -426,7 +434,7 @@
                         o = r - i;
                         a = new ArrayBuffer(o);
                         s = new Uint8Array(a);
-                        l = new Uint8Array(this,i,o);
+                        l = new Uint8Array(this, i, o);
                         s.set(l);
                         return a
                     }
@@ -461,12 +469,12 @@
             function g() {
                 this.reset()
             }
-            g.prototype.append = function(e) {
+            g.prototype.append = function (e) {
                 this.appendBinary(s(e));
                 return this
             };
-            
-            g.prototype.appendBinary = function(e) {
+
+            g.prototype.appendBinary = function (e) {
                 this._buff += e;
                 this._length += e.length;
                 var t = this._buff.length, n;
@@ -475,8 +483,8 @@
                 this._buff = this._buff.substring(n - 64);
                 return this
             };
-            
-            g.prototype.end = function(e) {
+
+            g.prototype.end = function (e) {
                 var t = this._buff, n = t.length, i, r = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], o;
                 for (i = 0; i < n; i += 1)
                     r[i >> 2] |= t.charCodeAt(i) << (i % 4 << 3);
@@ -487,36 +495,36 @@
                 this.reset();
                 return o
             };
-            
-            g.prototype.reset = function() {
+
+            g.prototype.reset = function () {
                 this._buff = "";
                 this._length = 0;
                 this._hash = [1732584193, -271733879, -1732584194, 271733878];
                 return this
             };
-            
-            g.prototype.getState = function() {
+
+            g.prototype.getState = function () {
                 return {
                     buff: this._buff,
                     length: this._length,
                     hash: this._hash.slice()
                 }
             };
-            
-            g.prototype.setState = function(e) {
+
+            g.prototype.setState = function (e) {
                 this._buff = e.buff;
                 this._length = e.length;
                 this._hash = e.hash;
                 return this
             };
-            
-            g.prototype.destroy = function() {
+
+            g.prototype.destroy = function () {
                 delete this._hash;
                 delete this._buff;
                 delete this._length
             };
-            
-            g.prototype._finish = function(e, t) {
+
+            g.prototype._finish = function (e, t) {
                 var n = t, i, r, o;
                 e[n >> 2] |= 128 << (n % 4 << 3);
                 if (n > 55) {
@@ -532,21 +540,21 @@
                 e[15] = o;
                 u(this._hash, e)
             };
-            
-            g.hash = function(e, t) {
+
+            g.hash = function (e, t) {
                 return g.hashBinary(s(e), t)
             };
-            
-            g.hashBinary = function(e, t) {
+
+            g.hashBinary = function (e, t) {
                 var n = r(e)
-                  , i = a(n);
+                    , i = a(n);
                 return t ? f(i) : i
             };
-            
-            (g.ArrayBuffer = function() {
+
+            (g.ArrayBuffer = function () {
                 this.reset()
             }
-            ).prototype.append = function(e) {
+            ).prototype.append = function (e) {
                 var t = p(this._buff.buffer, e, true), n = t.length, i;
                 this._length += e.byteLength;
                 for (i = 64; i <= n; i += 64)
@@ -554,8 +562,8 @@
                 this._buff = i - 64 < n ? new Uint8Array(t.buffer.slice(i - 64)) : new Uint8Array(0);
                 return this
             };
-            
-            g.ArrayBuffer.prototype.end = function(e) {
+
+            g.ArrayBuffer.prototype.end = function (e) {
                 var t = this._buff, n = t.length, i = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], r, o;
                 for (r = 0; r < n; r += 1)
                     i[r >> 2] |= t[r] << (r % 4 << 3);
@@ -566,39 +574,45 @@
                 this.reset();
                 return o
             };
-            
-            g.ArrayBuffer.prototype.reset = function() {
+
+            g.ArrayBuffer.prototype.reset = function () {
                 this._buff = new Uint8Array(0);
                 this._length = 0;
                 this._hash = [1732584193, -271733879, -1732584194, 271733878];
                 return this
             };
-            
-            g.ArrayBuffer.prototype.getState = function() {
+
+            g.ArrayBuffer.prototype.getState = function () {
                 var e = g.prototype.getState.call(this);
                 e.buff = l(e.buff);
                 return e
             };
-            
-            g.ArrayBuffer.prototype.setState = function(e) {
+
+            g.ArrayBuffer.prototype.setState = function (e) {
                 e.buff = t(e.buff, true);
                 return g.prototype.setState.call(this, e)
             };
-            
+
             g.ArrayBuffer.prototype.destroy = g.prototype.destroy
             g.ArrayBuffer.prototype._finish = g.prototype._finish
-            g.ArrayBuffer.hash = function(e, t) {
+            g.ArrayBuffer.hash = function (e, t) {
                 var n = o(new Uint8Array(e))
-                  , i = a(n);
+                    , i = a(n);
                 return t ? f(i) : i
             };
-            
+
             return g;
         })();
         function getM3U8(src) {
             let url = "";
-            
-            fetch(src)
+
+            fetch('/api/fetch-web', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    url: src
+                })
+            })
                 .then(res => {
                     if (!res.ok) return null;
                     return res.text();
@@ -608,7 +622,7 @@
                     const doc = parser.parseFromString(html, "text/html");
                     const str = doc.querySelectorAll("#video script")[0].innerHTML;
                     const match = str.match(/var\s+guid\s*=\s*["']([^"']*)["']/);
-                    if(!match) throw Error();
+                    if (!match) throw Error();
                     const guid = match[1];
                     url = "/api/cctv?" + "pid=" + guid + "&client=flash&im=0";
                     // let e = this.HTTP_PRE + vodh5player.VDN_URL + "pid=" + t.videoId + vodh5player.VDN_PARA1;
@@ -643,10 +657,10 @@
                     console.error(err);
                     return null;
                 });
-                //https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=6456428ccf674850ba426a54d3624e61&client=flash&im=0&tsp=1770983999&vn=2049&vc=D9F39DD3DC22B679671A3D6EC1552B6E&uid=C19533225C68E4D039065B6D5056AED6&wlan=
+            //https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=6456428ccf674850ba426a54d3624e61&client=flash&im=0&tsp=1770983999&vn=2049&vc=D9F39DD3DC22B679671A3D6EC1552B6E&uid=C19533225C68E4D039065B6D5056AED6&wlan=
         }
         // ---------- 1. 定义渲染卡片的核心函数 (覆盖原callback) ----------
-        window.callback = function(res) {
+        window.callback = function (res) {
             // 获取卡片容器
             const container = document.getElementById('js-cardList');
             if (!container) return;
@@ -680,14 +694,14 @@
 
                 // 创建卡片 —— 语义化链接卡片
                 const card = document.createElement('a');
-                card.href = `javascript:getM3U8('/api/fetch-web?url=' + encodeURIComponent("${url}"));`;
+                card.href = `javascript:getM3U8('${url}')`;
                 // card.target = '_blank';      // 新标签页打开，保留列表页
                 card.rel = 'noopener noreferrer';
                 card.className = 'card-item';
-                
+
                 // 纯标题展示，干净
                 card.textContent = title;
-                
+
                 // 可选：添加小箭头或装饰（纯文本亦可）
                 // 不加多余元素，保持极简卡片风格
 
@@ -695,86 +709,74 @@
             });
         };
 
-        // ---------- 2. 保留并强化原始数据获取逻辑 (使用whateverorigin代理) ----------
         (function fetchAndRender() {
-            // 原有代理请求——从央视一线栏目页解析出topicID和mode类型
-            fetch('/api/fetch-web?url=' + `https://tv.cctv.com/lm/${name}/index.shtml`)
+            fetch('/api/fetch-web', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    url: `https://tv.cctv.com/lm/${name}/index.shtml`
+                })
+            })
                 .then(res => {
                     if (!res.ok) return null;
                     return res.text();
                 })
                 .then(html => {
+                    // 后面解析 HTML、eval、创建 jsonp script 的逻辑完全不变
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, "text/html");
-                    
-                    // 提取topicID —— 原逻辑eval特定脚本，保留，并做容错
-                    try {
-                        eval(doc.querySelector("#SUBD1694159939229380 > script")?.textContent || '');
-                    } catch (e) {
-                        console.warn('eval提取topicID失败，使用备用id', e);
-                    }
 
-                    // ★ 容错：若topicID未定义，给一个常见的央视一线栏目id（保障demo不崩）
-                    if (typeof topicID === 'undefined' || !topicID) {
-                        window.topicID = 'TOPC1451543462858283';   // 一线常见id
-                    }
+                    eval(doc.evaluate("/html/body/div[3]/div/div/div/div/div/div[6]/div[1]/script",
+                        doc,
+                        null,
+                        XPathResult.FIRST_ORDERED_NODE_TYPE,
+                        null
+                    ).singleNodeValue?.textContent || '');
 
-                    // 获取当前选中的栏目类型 (data-num)
                     let type = doc.querySelector('.lanmu19629_ind02 .nav li.cur')?.getAttribute("data-num");
-                    // 若解析不到type，默认使用 '0' 或 通用模式
-                    if (!type) {
-                        type = '0';   // 大多数情况兼容
-                    }
+                    if (!type) type = '0';
 
-                    // 动态创建script进行jsonp请求 —— 使用callback
                     let script = document.createElement('script');
                     script.src = `https://api.cntv.cn/NewVideo/getVideoListByColumn?id=${topicID}&n=20&sort=desc&p=${page}&d=&mode=${type}&serviceId=tvcctv&callback=callback`;
-                    
-                    // 移除可能存在的旧script标签（干净请求）
+
                     const oldScript = document.querySelector('script[src*="getVideoListByColumn"]');
                     if (oldScript) oldScript.remove();
-                    
                     document.body.appendChild(script);
                 })
                 .catch(err => {
-                    console.error('代理请求一线页面失败:', err);
+                    console.error(err);
                 });
         })();
 
         // ---------- 3. “下一页”按钮 
         const nextBtn = document.getElementById('nextPageBtn');
         if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
-                page ++;
+            nextBtn.addEventListener('click', function () {
+                page++;
                 window.location.href = `listener.html?name=${name}&page=${page}`;
             });
         }
 
         const prevBtn = document.getElementById('prevPageBtn');
-        if(prevBtn) {
-            prevBtn.addEventListener('click', function() {
-                page --;
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function () {
+                page--;
                 window.location.href = `listener.html?name=${name}&page=${page}`;
             });
         }
 
-        if(page > 1 && prevBtn.disabled) prevBtn.disabled = false;
+        if (page > 1 && prevBtn.disabled) prevBtn.disabled = false;
         // ---------- 4. 补充: 若callback超过时限或未触发, 给出后备提示 (可选) ----------
         // 设置一个兜底定时，8秒后若列表仍为空，提示用户
-        /*setTimeout(() => {
+        setTimeout(() => {
             const container = document.getElementById('js-cardList');
             if (container && container.children.length === 0) {
                 // 但callback尚未填充内容
                 container.innerHTML = '<div class="list-placeholder">⏳ 请求似乎有点慢，刷新试试？</div>';
             }
-        }, 8000);*/
+        }, 8000);
     </script>
 
-    <!-- 
-        底层说明：完全保留原始数据流。
-        使用whateverorigin.org获取栏目页→eval提取topicID→jsonp→callback渲染卡片。
-        界面：卡片贴顶，底部按钮带//TODO占位。
-        符合“设计界面：函数callback将list.title以卡片列表铺开，点击卡片跳转url，底端下一页按钮”
-    -->
 </body>
+
 </html>
