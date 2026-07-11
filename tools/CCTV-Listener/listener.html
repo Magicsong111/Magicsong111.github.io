@@ -727,8 +727,9 @@
                     const doc = parser.parseFromString(html, "text/html");
 
                     const regex = /var\s+topicID\s*=\s*'([^']*)'/;
-                    const match = pageString.match(regex);
-                    return match ? match[1] : null;
+                    const match = html.match(regex);
+                    if (!match) throw new Error("没有找到topicID！");
+                    topicID = match[1]
 
                     let type = doc.querySelector('.lanmu19629_ind02 .nav li.cur')?.getAttribute("data-num");
                     if (!type) type = '0';
