@@ -726,12 +726,9 @@
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, "text/html");
 
-                    eval(doc.evaluate("/html/body/div[3]/div/div/div/div/div/div[6]/div[1]/script",
-                        doc,
-                        null,
-                        XPathResult.FIRST_ORDERED_NODE_TYPE,
-                        null
-                    ).singleNodeValue?.textContent || '');
+                    const regex = /var\s+topicID\s*=\s*'([^']*)'/;
+                    const match = pageString.match(regex);
+                    return match ? match[1] : null;
 
                     let type = doc.querySelector('.lanmu19629_ind02 .nav li.cur')?.getAttribute("data-num");
                     if (!type) type = '0';
