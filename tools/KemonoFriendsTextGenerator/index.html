@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kemono Friends Logo Generator – 兽娘动物园风格Logo生成器</title>
+    <!-- <link rel="icon" href="card.png"> -->
+    <!-- <script src="canvas-toBlob.js"></script> -->
+    <script>
+        !function(t){"use strict";var o,e=t.Uint8Array,n=t.HTMLCanvasElement,s=n&&n.prototype,i=/\s*;\s*base64\s*(?:;|$)/i,a="toDataURL",l=function(t){for(var n,s,i=t.length,a=new e(i/4*3|0),l=0,b=0,r=[0,0],f=0,B=0;i--;)s=t.charCodeAt(l++),255!==(n=o[s-43])&&void 0!==n&&(r[1]=r[0],r[0]=s,B=B<<6|n,4===++f&&(a[b++]=B>>>16,61!==r[1]&&(a[b++]=B>>>8),61!==r[0]&&(a[b++]=B),f=0));return a};e&&(o=new e([62,-1,-1,-1,63,52,53,54,55,56,57,58,59,60,61,-1,-1,-1,0,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,-1,-1,-1,-1,-1,-1,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51])),!n||s.toBlob&&s.toBlobHD||(s.toBlob||(s.toBlob=function(t,o){if(o||(o="image/png"),this.mozGetAsFile)t(this.mozGetAsFile("canvas",o));else if(this.msToBlob&&/^\s*image\/png\s*(?:$|;)/i.test(o))t(this.msToBlob());else{var n,s=Array.prototype.slice.call(arguments,1),b=this[a].apply(this,s),r=b.indexOf(","),f=b.substring(r+1),B=i.test(b.substring(0,r));Blob.fake?((n=new Blob).encoding=B?"base64":"URI",n.data=f,n.size=f.length):e&&(n=B?new Blob([l(f)],{type:o}):new Blob([decodeURIComponent(f)],{type:o})),t(n)}}),!s.toBlobHD&&s.toDataURLHD?s.toBlobHD=function(){a="toDataURLHD";var t=this.toBlob();return a="toDataURL",t}:s.toBlobHD=s.toBlob)}("undefined"!=typeof self&&self||"undefined"!=typeof window&&window||this.content||this);
+    </script>
+    <!-- <script src="FileSaver.js"></script> -->
+    <script>
+        var saveAs=saveAs||function(e){"use strict";if(!(void 0===e||"undefined"!=typeof navigator&&/MSIE [1-9]\./.test(navigator.userAgent))){var t=e.document,n=function(){return e.URL||e.webkitURL||e},o=t.createElementNS("http://www.w3.org/1999/xhtml","a"),r="download"in o,a=/constructor/i.test(e.HTMLElement)||e.safari,i=/CriOS\/[\d]+/.test(navigator.userAgent),d=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},s=function(e){setTimeout(function(){"string"==typeof e?n().revokeObjectURL(e):e.remove()},4e4)},f=function(e){return/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)?new Blob([String.fromCharCode(65279),e],{type:e.type}):e},u=function(t,u,c){c||(t=f(t));var l,p=this,v="application/octet-stream"===t.type,w=function(){!function(e,t,n){for(var o=(t=[].concat(t)).length;o--;){var r=e["on"+t[o]];if("function"==typeof r)try{r.call(e,n||e)}catch(e){d(e)}}}(p,"writestart progress write writeend".split(" "))};if(p.readyState=p.INIT,r)return l=n().createObjectURL(t),void setTimeout(function(){var e,t;o.href=l,o.download=u,e=o,t=new MouseEvent("click"),e.dispatchEvent(t),w(),s(l),p.readyState=p.DONE});!function(){if((i||v&&a)&&e.FileReader){var o=new FileReader;return o.onloadend=function(){var t=i?o.result:o.result.replace(/^data:[^;]*;/,"data:attachment/file;");e.open(t,"_blank")||(e.location.href=t),t=void 0,p.readyState=p.DONE,w()},o.readAsDataURL(t),void(p.readyState=p.INIT)}(l||(l=n().createObjectURL(t)),v)?e.location.href=l:e.open(l,"_blank")||(e.location.href=l);p.readyState=p.DONE,w(),s(l)}()},c=u.prototype;return"undefined"!=typeof navigator&&navigator.msSaveOrOpenBlob?function(e,t,n){return t=t||e.name||"download",n||(e=f(e)),navigator.msSaveOrOpenBlob(e,t)}:(c.abort=function(){},c.readyState=c.INIT=0,c.WRITING=1,c.DONE=2,c.error=c.onwritestart=c.onprogress=c.onwrite=c.onabort=c.onerror=c.onwriteend=null,function(e,t,n){return new u(e,t||e.name||"download",n)})}}("undefined"!=typeof self&&self||"undefined"!=typeof window&&window||this.content);"undefined"!=typeof module&&module.exports?module.exports.saveAs=saveAs:"undefined"!=typeof define&&null!==define&&null!==define.amd&&define("FileSaver.js",function(){return saveAs});
+    </script>
+    <script src="./loadDictionary.js"></script>
+    <style>
+        /* ========== 字体定义（合并） ========== */
+        @font-face {
+            font-family: 'japarifont-zh';
+            src: url('japarifont.woff');
+        }
+        @font-face {
+            font-family: 'japarifont-en';
+            src: url('Moji_Heavy.otf');
+        }
+        @font-face {
+            font-family: 'japarifont_cn';
+            src: url('HelloFont-BangBangTi.ttf');
+        }
+        @font-face {
+            font-family: 'DejimaMincho';
+            src: url('dejima-mincho-r227.ttf');
+        }
+        @font-face {
+            font-family: 'SourceHanSerif';
+            src: url('SourceHanSerifCN-Bold.otf');
+        }
+        @font-face {
+            font-family: 'PlayBold';
+            src: url('Play-Bold.ttf');
+        }
+
+        /* ========== 全局重置 ========== */
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            background: #1a1a1a;
+            font-family: "微软雅黑", "黑体", "楷体", sans-serif;
+        }
+
+        /* ========== 主容器 ========== */
+        .container {
+            max-width: 900px;
+            margin: 10px auto;
+            padding: 20px;
+            background: #2d2d2d;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        }
+
+        /* ========== 预览区 ========== */
+        .preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .preview img#result {
+            max-width: 100%;
+            height: auto;
+            border: 6px solid transparent;
+            border-radius: 12px;
+            transition: border 0.3s;
+            background: #222;
+        }
+        .preview img#result:hover {
+            border-color: #ffe663;
+        }
+
+        /* 隐藏原有的 .top / .bottom / .middle 结构（实际由canvas绘制，仅保留样式兼容） */
+        .top, .bottom, .middle { display: none; }
+
+        /* ========== 输入区 ========== */
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .inputs span {
+            color: #ffad65;
+            text-shadow: 0 0 8px black;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .inputs input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1.1rem;
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            background: rgba(0,0,0,0.7);
+            outline: none;
+            transition: background 0.2s;
+        }
+        .inputs input[type="text"]:focus {
+            background: rgba(30,30,30,0.9);
+        }
+
+        /* ========== 控制栏（风格切换 + 下载按钮） ========== */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 6px 0 10px 0;
+        }
+        .style-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            text-shadow: 0 0 6px black;
+            font-weight: bold;
+        }
+        .style-switcher button {
+            background: rgba(0,0,0,0.6);
+            border: 2px solid #ffe663;
+            color: #ffe663;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+        .style-switcher button.active {
+            background: #ffe663;
+            color: #222;
+        }
+        .style-switcher button:hover {
+            background: #ffe663;
+            color: #222;
+        }
+
+        .download-btn {
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 6px 24px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: lighter;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: japarifont_cn, japarifont-en, sans-serif;
+        }
+        .download-btn:hover {
+            background: #ffe663;
+            color: #222;
+            border-color: #ffe663;
+        }
+
+        /* ========== 提示信息 ========== */
+        .inputs p {
+            color: #ccc;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+            margin: 4px 0;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .inputs p a {
+            color: #ffad65;
+            text-decoration: none;
+        }
+        .inputs p a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== 页脚 ========== */
+        footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            text-shadow: 0 0 8px black;
+            text-align: center;
+            font-size: 0.85rem;
+            font-family: PlayBold, sans-serif;
+        }
+        footer a {
+            color: #ffad65;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+            color: #ffe663;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 600px) {
+            .container {
+                margin: 8px;
+                padding: 15px;
+            }
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .style-switcher {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .inputs input[type="text"] {
+                font-size: 1rem;
+                padding: 10px;
+            }
+            .download-btn {
+                width: 100%;
+                text-align: center;
+            }
+            footer {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* ========== 工具类 ========== */
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 预览 -->
+    <div class="preview noselect">
+        <img id="result" alt="Logo预览" />
+    </div>
+
+    <!-- 输入与控制 -->
+    <div class="inputs">
+        <span>↓ 输入文字（顶部 · 主标题 · 底部）</span>
+        <input id="top" type="text" placeholder="顶部文字" />
+        <input id="middle" type="text" placeholder="中间主标题" />
+        <input id="bottom" type="text" placeholder="底部英文" />
+
+        <!-- 控制栏 -->
+        <div class="controls">
+            <div class="style-switcher">
+                <span>字体风格：</span>
+                <button id="style-zh" class="active">一期</button>
+                <button id="style-en">兽3</button>
+            </div>
+            <button id="download" class="download-btn">⬇ 下载Logo</button>
+        </div>
+
+        <p>长按预览图可分享（移动端） · 切换风格将重置示例文本</p>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>
+            Powered by 
+            <a target="_blank" href="http://getsuren.com/killgoU.html">キルゴU</a>, 
+            <a target="_blank" href="https://code.google.com/archive/p/dejima-fonts/">出島明朝</a>,
+            <a target="_blank" href="https://fonts.google.com/specimen/Play">Play</a>,
+            <a target="_blank" href="https://flic.kr/p/76RaWE">Savanna</a> and Friends.
+            <br>
+            Author: <a href="https://twitter.com/cubbit2">@cubbit2</a> · 
+            KF1: <a href="http://github.com/yanstory">Yanstime</a> · 
+            KF3: <a href="https://codeberg.org/Notritsu">Notritsu</a>
+        </p>
+    </footer>
+</div>
+
+<script>
+    // ========== 核心JS（与之前一致，仅微调初始化） ==========
+    window.onload = function() {
+        var seed = {
+            x: (2147483648 * Math.random()) | 0,
+            y: (2147483648 * Math.random()) | 0,
+            z: (2147483648 * Math.random()) | 0,
+            w: (2147483648 * Math.random()) | 0
+        };
+        function randomInt(xors) {
+            var t = xors.x ^ (xors.x << 11);
+            xors.x = xors.y;
+            xors.y = xors.z;
+            xors.z = xors.w;
+            return xors.w = (xors.w ^ (xors.w >>> 19)) ^ (t ^ (t >>> 8));
+        }
+        function random(xors) {
+            return randomInt(xors) / 2147483648;
+        }
+        function shuffle(xs) {
+            var v = Object.assign({}, seed);
+            var xs = xs.slice();
+            var ys = [];
+            while (0 < xs.length) {
+                var i = Math.abs(randomInt(v)) % xs.length;
+                ys.push(xs[i]);
+                xs.splice(i, 1);
+            }
+            return ys;
+        }
+
+        var colorTuples = shuffle([
+            ["#16ae67", "#90c31f"],
+            ["#ea5421", "#f39800"],
+            ["#00ac8e", "#e4007f"],
+            ["#227fc4", "#00a1e9"],
+            ["#9fa0a0", "#c9caca"],
+            ["#e60013", "#f39800"],
+            ["#c3d600", "#a42e8c"]
+        ]);
+        var topColors = shuffle([
+            "#04ad8f", "#a6ce48", "#f3a118", "#ea6435", "#17b297",
+            "#e30983", "#2782c4", "#1aa6e7", "#b5b5b5", "#f29905",
+            "#e50011", "#ccdc26", "#a5328d", "#0aaa60", "#91c423",
+            "#f29300", "#ec5f69", "#22b69e", "#e63e9b", "#917220"
+        ]);
+
+        var topInput = document.querySelector("#top");
+        var middleInput = document.querySelector("#middle");
+        var bottomInput = document.querySelector("#bottom");
+        var image = document.getElementById("result");
+        var download = document.getElementById("download");
+        var canvas = document.createElement("canvas");
+        var g = canvas.getContext("2d");
+
+        var currentStyle = 'zh';
+
+        function getFonts(style) {
+            if (style === 'zh') {
+                return {
+                    top: '"DejimaMincho"',
+                    middle: '"japarifont-zh"',
+                    bottom: 'PlayBold'
+                };
+            } else {
+                return {
+                    top: '"SourceHanSerif", sans-serif',
+                    middle: '"japarifont-en", "japarifont_cn", sans-serif',
+                    bottom: 'PlayBold'
+                };
+            }
+        }
+
+        function getDefaultTexts(style) {
+            if (style === 'zh') {
+                return {
+                    top: '女の子の姿になった動物たちが繰り広げる大冒険！',
+                    middle: 'けものフレンズ',
+                    bottom: 'KEMONO FRIENDS'
+                };
+            } else {
+                return {
+                    top: '女の子の姿になった動物たちが繰り広げる大冒険！',
+                    middle: 'けも●フレンズ',
+                    bottom: 'KEMONO FRIENDS'
+                };
+            }
+        }
+
+        function setText(topText, middleText, bottomText, style) {
+            style = style || currentStyle;
+            if (style === 'zh' && window.dictionary && typeof window.dictionary === 'object') {
+                middleText = middleText.split('').map(function(ch) {
+                    return window.dictionary[ch]?.[0] || ch;
+                }).join('');
+            }
+            var fonts = getFonts(style);
+
+            var topTextSize = 30;
+            var topMiddlePadding = 30;
+            var middleTextSize = 120;
+            var middleBottomPadding = 20;
+            var bottomTextSize = 30;
+            var margin = 60;
+            var bottomTextLetterSpacing = 20;
+
+            var topTextFont = `normal bold ${topTextSize}px/2 ${fonts.top}`;
+            var middleTextFont = `normal 400 ${middleTextSize}px/2 ${fonts.middle}`;
+            var bottomTextFont = `normal 400 ${bottomTextSize}px/2 ${fonts.bottom}`;
+
+            g.font = topTextFont;
+            var topMetrics = g.measureText(topText);
+            g.font = middleTextFont;
+            var middleMetrics = g.measureText(middleText);
+            g.font = bottomTextFont;
+            var bottomMetrics = g.measureText(bottomText);
+            canvas.width = margin + Math.max(
+                topMetrics.width,
+                middleMetrics.width,
+                bottomMetrics.width + bottomTextLetterSpacing * (bottomText.length - 1)
+            ) + margin;
+            canvas.height = margin + topTextSize + topMiddlePadding + middleTextSize + middleBottomPadding + bottomTextSize + margin;
+
+            g.save();
+            g.clearRect(0, 0, canvas.width, canvas.height);
+            g.textBaseline = "top";
+
+            // 顶部文字
+            function iterate(callback) {
+                var xors = Object.assign({}, seed);
+                g.save();
+                g.font = topTextFont;
+                g.fillStyle = "white";
+                g.strokeStyle = "white";
+                g.lineJoin = "round";
+                g.lineWidth = 10.0;
+                var metrics = g.measureText(topText);
+                g.translate(margin + (canvas.width - metrics.width - margin * 2) * 0.5, margin);
+                for (var i = 0; i < topText.length; i++) {
+                    var c = topText.slice(i, i + 1);
+                    var rot = random(xors) * 0.2;
+                    var m = g.measureText(c);
+                    g.save();
+                    g.translate(m.width * 0.5, topTextSize * 0.5);
+                    g.rotate(rot);
+                    g.translate(-m.width * 0.5, -topTextSize * 0.5);
+                    callback(i, c);
+                    g.restore();
+                    g.translate(m.width, 0);
+                }
+                g.restore();
+            }
+            g.save();
+            iterate(function(i, c) {
+                g.shadowColor = "transparent";
+                g.strokeText(c, 0, 0);
+            });
+            iterate(function(i, c) {
+                g.shadowColor = "rgba(0, 0, 0, 0.3)";
+                g.shadowBlur = 10;
+                g.fillStyle = topColors[i % topColors.length];
+                g.fillText(c, 0, 0);
+            });
+            g.restore();
+
+            // 中间
+            var metrics = g.measureText(middleText);
+            g.translate((canvas.width - middleMetrics.width) * 0.5, margin + topTextSize + topMiddlePadding);
+
+            g.font = middleTextFont;
+            g.strokeStyle = "white";
+            g.lineWidth = 20.0;
+            g.shadowColor = "rgba(0, 0, 0, 0.3)";
+            g.shadowBlur = 10;
+            g.lineCap = "round";
+            g.lineJoin = "round";
+            g.strokeText(middleText, 0, 0);
+
+            var xors = Object.assign({}, seed);
+            for (var i = 0; i < middleText.length; i++) {
+                var c = middleText.slice(i, i + 1);
+                g.shadowColor = "rgba(0, 0, 0, 0.6)";
+                g.shadowBlur = 10;
+                g.fillStyle = colorTuples[i % colorTuples.length][0];
+                g.fillText(c, 0, 0);
+
+                g.save();
+                var rot = random(xors);
+                g.beginPath();
+                g.save();
+                g.translate(middleTextSize * 0.5, middleTextSize * 0.5);
+                g.rotate(rot);
+                g.translate(-middleTextSize * 0.5, -middleTextSize * 0.5);
+                g.moveTo(-middleTextSize * 2, middleTextSize * 0.5);
+                g.lineTo(middleTextSize * 2, middleTextSize * 0.5);
+                g.lineTo(middleTextSize * 2, middleTextSize * 2);
+                g.lineTo(-middleTextSize * 2, middleTextSize * 2);
+                g.closePath();
+                g.restore();
+                g.clip();
+
+                g.shadowColor = "none";
+                g.shadowBlur = 0;
+                g.fillStyle = colorTuples[i % colorTuples.length][1];
+                g.fillText(c, 0, 0);
+                g.restore();
+
+                var m = g.measureText(c);
+                g.translate(m.width, 0);
+            }
+            g.restore();
+
+            // 底部
+            g.save();
+            g.strokeStyle = "white";
+            g.fillStyle = "#977a2d";
+            g.lineWidth = 13.0;
+            g.lineCap = "round";
+            g.lineJoin = "round";
+            g.textBaseline = "top";
+            g.font = bottomTextFont;
+
+            var metrics2 = g.measureText(bottomText);
+            g.translate(
+                (canvas.width - metrics2.width - (bottomText.length - 1) * bottomTextLetterSpacing) * 0.5,
+                margin + topTextSize + topMiddlePadding + middleTextSize + middleBottomPadding
+            );
+            for (var j = 0; j < bottomText.length; j++) {
+                var ch = bottomText.slice(j, j + 1);
+                g.shadowColor = "rgba(0, 0, 0, 0.3)";
+                g.shadowBlur = 10;
+                g.strokeText(ch, 0, 0);
+                g.shadowColor = "transparent";
+                g.fillText(ch, 0, 0);
+                var m2 = g.measureText(ch);
+                g.translate(m2.width + bottomTextLetterSpacing, 0);
+            }
+            g.restore();
+
+            var url = canvas.toDataURL();
+            image.src = url;
+            download.href = url;
+        }
+
+        function update() {
+            setTimeout(function() {
+                setText(topInput.value, middleInput.value, bottomInput.value, currentStyle);
+            }, 0);
+        }
+
+        function setStyle(style) {
+            currentStyle = style;
+            document.getElementById('style-zh').classList.toggle('active', style === 'zh');
+            document.getElementById('style-en').classList.toggle('active', style === 'en');
+            var defaults = getDefaultTexts(style);
+            topInput.value = defaults.top;
+            middleInput.value = defaults.middle;
+            bottomInput.value = defaults.bottom;
+            update();
+        }
+
+        topInput.addEventListener('input', update);
+        middleInput.addEventListener('input', update);
+        bottomInput.addEventListener('input', update);
+
+        document.getElementById('style-zh').addEventListener('click', function() { setStyle('zh'); });
+        document.getElementById('style-en').addEventListener('click', function() { setStyle('en'); });
+
+        download.addEventListener('click', function() {
+            canvas.toBlob(function(blob) {
+                saveAs(blob, middleInput.value + '.png');
+            });
+        });
+
+        // 默认中文
+        const fontNames = [
+            'japarifont-zh', 'japarifont-en', 'japarifont_cn',
+            'DejimaMincho', 'SourceHanSerif', 'PlayBold'
+        ];
+        Promise.all(fontNames.map(name => document.fonts.load(`1em ${name}`)))
+            .then(() => setStyle('zh'));
+    };
+</script>
+</body>
+</html>
