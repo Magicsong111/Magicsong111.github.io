@@ -105,12 +105,12 @@
             font-weight: bold; /* 设置字体粗细 */
             color: white; /* 设置文字颜色 */
             text-align: center; /* 设置文字对齐方式 */
-            cursor: pointer; /* 设置鼠标悬停时的光标样式 */
+            /* cursor: pointer; 设置鼠标悬停时的光标样式 */
             background-repeat: ""; /* 设置背景重复方式 */
         }
 
-        .github:hover {
-            background-color: rgba(0, 0, 0, 0.671); /* 设置鼠标悬停时的背景颜色 */
+        .github:disabled {
+            background-color: rgba(139, 139, 139, 0.671); /* 设置鼠标悬停时的背景颜色 */
         }
 
         .bilibili {
@@ -122,12 +122,12 @@
             font-weight: bold; /* 设置字体粗细 */
             color: white; /* 设置文字颜色 */
             text-align: center; /* 设置文字对齐方式 */
-            cursor: pointer; /* 设置鼠标悬停时的光标样式 */
+            /* cursor: pointer; 设置鼠标悬停时的光标样式 */
             background-repeat: ""; /* 设置背景重复方式 */
         }
 
-        .bilibili:hover {
-            background-color: #ff6596b8; /* 设置鼠标悬停时的背景颜色 */
+        .bilibili:disabled {
+            background-color: #8f6e78b8; /* 设置鼠标悬停时的背景颜色 */
         }
 
         .content-box {
@@ -223,7 +223,7 @@
         <div class="left-side">
             <button class="arrow left" onclick="change(-1)">&#10094;</button>
             <div class="image-placeholder">
-                <img id="image" src="golden/1.jpg" alt="">
+                <img id="image" src="golden/1.jpg" alt="图片加载中">
             </div>
             <button class="arrow right" onclick="change(1)">&#10095;</button>
         </div>
@@ -233,8 +233,8 @@
             <!-- 按钮区域 -->
             <div class="action-buttons">
                 <button class="download" onclick="gotoLan('5tv4')">蓝奏云</button>
-                <!-- <button class="github">Github</button> -->
-                <button class="bilibili">Bilibili</button>
+                <button class="github" disabled>Github</button>
+                <button class="bilibili" disabled>Bilibili</button>
             </div>
             
             <!-- 内容框区域 -->
